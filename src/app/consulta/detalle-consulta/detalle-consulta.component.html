@@ -1,0 +1,528 @@
+<div class="card shadow p-3">
+
+    
+<!-- ENCABEZADO DE CONSULTA -->
+<div class="card shadow border mb-2">
+    <div class="d-flex justify-between align-items-center px-3 pt-2 flex-wrap gap-2">
+      <div class="d-flex align-items-center flex-wrap gap-2 fs-6 flex-grow-1">
+        <span class="text-muted fw-semibold">CONSULTA</span>
+        <span class="fw-bold text-success">{{ consultaModel.numeroConsulta?.padStart(15, '0') }}</span>
+        <span class="badge bg-light text-dark border px-2 py-1 shadow-sm">
+          <i class="fa fa-calendar-alt me-1"></i> {{ (consultaModel.fechaConsulta || today) | date:'dd MMM. yyyy hh:mm a' | uppercase }}
+        </span>
+        <span class="badge bg-light text-dark border px-2 py-1 shadow-sm">
+          <i class="fa" [ngClass]="consultaModel.canal === 'Video consulta' ? 'fa-video' : 'fa-hospital'" me-1></i>
+          {{ consultaModel.canal?.toUpperCase() }}
+        </span>
+        <span class="badge bg-light text-dark border px-2 py-1 shadow-sm">
+          <i class="fa fa-user-md me-1"></i> {{ consultaModel.tipoConsulta?.toUpperCase() }}
+        </span>
+        <span class="badge bg-light text-dark border px-2 py-1 shadow-sm">
+          <i class="fa fa-check-circle me-1"></i> {{ consultaModel.idEstadoConsulta === 2 ? 'INICIADA' : (consultaModel.estadoConsulta || '') | uppercase }}
+        </span>
+        <div class="ms-auto d-flex gap-2">
+          <button class="btn btn-primary btn-sm px-3 py-2 shadow">
+            <i class="fa fa-check me-1"></i> Terminar Consulta
+          </button>
+          <button class="btn btn-outline-danger btn-sm px-3 py-2 shadow">
+            <i class="fa fa-times me-1"></i> Cancelar Consulta
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="px-3 pb-2 pt-1 d-flex align-items-center gap-2">
+      <span class="text-uppercase small text-muted mb-0">Motivo de la consulta:</span>
+      <div class="fw-semibold text-dark fst-italic mb-0">{{ consultaModel.motivoConsulta }}</div>
+    </div>
+  </div>
+  
+<!-- ACORDEÓN DE ÚLTIMA CONSULTA -->
+<div class="card shadow border mb-2">
+    <div *ngIf="ultimaConsultaModel && ultimaConsultaModel.idConsulta">
+  
+      <!-- ENCABEZADO -->
+      <div class="header-ficha d-flex align-items-center justify-content-between px-3 py-2">
+        <div class="d-flex gap-4 flex-wrap">
+          <div>{{ ultimaConsultaModel.estadoConsulta }}</div>
+          <div>{{ ultimaConsultaModel.fechaConsulta | date:'dd MMMM yyyy' }}</div>
+          <div>{{ ultimaConsultaModel.idConsulta.toString().padStart(15, '0') }}</div>
+          <div>{{ ultimaConsultaModel.nombreMedico }}</div>
+        </div>
+  
+        <!-- FLECHITA -->
+        <div class="cursor-pointer" (click)="toggleAcordeon()">
+          <i class="fa" [ngClass]="acordeonAbierto ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+        </div>
+      </div>
+  
+      <!-- CUERPO EXPANDIBLE -->
+      <div *ngIf="acordeonAbierto" class="p-3 border-top">
+
+                 <!-- Tabs -->
+                 <div class="tab-selector px-3">
+                    <div
+                      *ngFor="let tab of tabs"
+                      class="tab"
+                      [class.active]="activeTab === tab"
+                      (click)="toggleTab(tab)">
+                      {{ tab | titlecase }}
+                    </div>
+                  </div>
+          
+                  <!-- Contenido y acordes -->
+                  <div class="row m-0">
+                    
+                    <!-- Columna izquierda -->
+                    <div class="col-md-8 tab-content">
+          
+                      <div *ngIf="activeTab === 'resumen'">
+                        <p class="text-justify small" style="text-align: justify;">{{ consultaSeleccionada.resumen || 'Sin contenido' }}</p>
+                      </div>
+          
+                      <div *ngIf="activeTab === 'subjetivo'">
+                        <p class="text-justify small" style="text-align: justify;">{{ consultaSeleccionada.subjetivo || 'Sin contenido' }}</p>
+                      </div>
+          
+                      <div *ngIf="activeTab === 'objetivo'" class="mt-3">
+                          <h6 class="fw-bold mb-3">Signos Vitales</h6>
+                          <div class="row g-1">
+                            <div
+                              class="col-6 col-md-3"
+                              *ngFor="let vital of [
+                                { label: 'Temperatura', value: consultaSeleccionada.signosVitales.temperatura + ' ºC' },
+                                { label: 'Peso', value: consultaSeleccionada.signosVitales.peso + ' kg' },
+                                { label: 'Talla', value: consultaSeleccionada.signosVitales.talla + ' cm' },
+                                { label: 'IMC', value: consultaSeleccionada.signosVitales.imc },
+                                { label: 'Tensión Arterial', value: consultaSeleccionada.signosVitales.sistolica + ' / ' + consultaSeleccionada.signosVitales.diastolica },
+                                { label: 'Frec. Cardíaca', value: consultaSeleccionada.signosVitales.frecCardiaca + ' x min.' },
+                                { label: 'Frec. Respiratoria', value: consultaSeleccionada.signosVitales.frecRespiratoria + ' x min.' },
+                                { label: 'Sat. Oxígeno', value: consultaSeleccionada.signosVitales.saturacionOxigeno + ' %' },
+                                { label: 'EVN', value: consultaSeleccionada.signosVitales.evn }
+                              ]"
+                            >
+                              <div class="border rounded p-1 px-2 bg-light small-box">
+                                <div class="text-uppercase text-muted" style="font-size: 0.75rem;">{{ vital.label }}</div>
+                                <div class="fw-semibold fs-6">{{ vital.value }}</div>
+                              </div>
+                            </div>
+                          </div>
+                        
+                          <hr class="my-3" />
+                        
+                          <h6 class="fw-bold mb-2">Exploración Física</h6>
+                          <p class="text-justify small" style="text-align: justify;">
+                            {{ consultaSeleccionada.objetivo || 'Sin contenido' }}
+                          </p>
+                        </div>
+                        
+                        
+          
+                      <div *ngIf="activeTab === 'analisis'">
+                        <p class="text-justify small" style="text-align: justify;">{{ consultaSeleccionada.analisis || 'Sin contenido' }}</p>
+                      </div>
+          
+                      <div *ngIf="activeTab === 'tratamiento'">
+                        <p class="text-justify small" style="text-align: justify;">{{ consultaSeleccionada.planTerapeutico || 'Sin contenido' }}</p>
+                      </div>
+                    </div>
+          
+                    <!-- Columna derecha -->
+                    <div class="col-md-4 accordion-column">
+                      <div class="accordion" id="acordeonConsulta">
+                        <div *ngFor="let panel of acordeones" class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button
+                              class="accordion-button collapsed fw-bold text-uppercase"
+                              type="button"
+                              data-bs-toggle="collapse"
+                              [attr.data-bs-target]="'#flush-' + panel.titulo">
+                              {{ panel.titulo }}
+                            </button>
+                          </h2>
+                          <div [id]="'flush-' + panel.titulo" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                              <p class="text-muted small">Contenido de {{ panel.titulo.toLowerCase() }}.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+          
+                  </div>
+
+
+      </div>
+  
+    </div>
+  </div>
+
+    
+<!-- ACORDEÓN DE ÚLTIMA CONSULTA -->
+    
+  
+    <!-- TABS -->
+    <div class="tab-selectorTit px-3">
+        <div
+          *ngFor="let tab of tabsTitulos"
+          class="tabTit"
+          [class.active]="activeTab2 === tab.valor"
+          (click)="toggleTabTitutlo(tab.valor)">
+          <span class="circle-letter">{{ tab.inicial }}</span>
+          <i class="fa" [ngClass]="tab.icono"></i> {{ tab.titulo }}
+        </div>
+      </div>
+  
+    <!-- SUBJETIVO -->
+    <div *ngIf="activeTab2 === 'subjetivo'" class="p-3">
+
+        <!-- Selector de Dolor -->
+        <div class="d-flex justify-content-end mb-2">
+          <ng-container *ngFor="let dolometro of dolometros">
+            <i
+              class="me-2 cursor-pointer fs-5"
+              [ngClass]="[
+                dolometroLevelIcons[dolometro.nivel],
+                consultaModel.catDolometroView?.nivel === dolometro.nivel ? 'text-danger' : 'text-muted'
+              ]"
+              [title]="dolometro.doloDescripcion"
+              (click)="seleccionarDolometro(dolometro)">
+            </i>
+          </ng-container>
+        </div>
+      
+        <!-- Área de texto subjetivo -->
+        <div class="mb-3">
+          <textarea
+            class="form-control"
+            rows="8"
+            placeholder="ESCRIBA AQUÍ..."
+            [(ngModel)]="consultaModel.subjetivo"
+            (ngModelChange)="dataChange()"
+            [disabled]="consultaModel.idEstadoConsulta !== 2"
+          ></textarea>
+        </div>
+      
+      </div>
+      
+  
+    <!-- OBJETIVO -->
+
+    <div *ngIf="activeTab2 === 'objetivo'" class="p-3">
+        <div class="row">
+      
+          <!-- COLUMNA IZQUIERDA: Signos vitales -->
+          <div class="col-md-6">
+            <div *ngFor="let campo of camposVitalesInline" class="vital-input">
+              <span class="label">{{ campo.label }}</span>
+              <input
+                type="text"
+                [(ngModel)]="consultaModel.signosVitales[campo.prop]"
+                [readonly]="campo.prop === 'imc'"
+                [disabled]="consultaModel.idEstadoConsulta !== 2" />
+              <span class="unidad" *ngIf="campo.unidad">{{ campo.unidad }}</span>
+            </div>
+      
+            <!-- PRESIÓN ARTERIAL -->
+            <div class="vital-input">
+              <span class="label">P.A.</span>
+              <input
+                type="text"
+                [(ngModel)]="consultaModel.signosVitales.sistolica"
+                placeholder="Sistólica"
+                [disabled]="consultaModel.idEstadoConsulta !== 2"
+                style="max-width: 90px;" />
+              <span class="fw-bold">/</span>
+              <input
+                type="text"
+                [(ngModel)]="consultaModel.signosVitales.diastolica"
+                placeholder="Diastólica"
+                [disabled]="consultaModel.idEstadoConsulta !== 2"
+                style="max-width: 90px;" />
+            </div>
+          </div>
+      
+          <!-- COLUMNA DERECHA: Comentarios y botón -->
+          <div class="col-md-6 d-flex flex-column justify-content-between">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h6 class="fw-semibold mb-0">
+                <i class="fa fa-align-left me-1"></i> COMENTARIOS
+              </h6>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm"
+                (click)="abrirExploracionFisicaModal()"
+                [disabled]="consultaModel.idEstadoConsulta !== 2">
+                <i class="fa fa-user-md me-1"></i> EXPLORACIÓN FÍSICA
+              </button>
+            </div>
+      
+            <textarea
+              class="form-control"
+              rows="12"
+              [(ngModel)]="consultaModel.objetivo"
+              placeholder="Comentarios..."
+              [disabled]="consultaModel.idEstadoConsulta !== 2">
+            </textarea>
+          </div>
+      
+        </div>
+      </div>
+      
+      
+      
+  
+    <!-- ANALISIS -->
+
+
+    <div *ngIf="activeTab2 === 'analisis'" class="row g-3">
+
+        <!-- IZQUIERDA: búsqueda y texto -->
+        <div class="col-md-9">
+          <div class="row g-2 align-items-center">
+      
+            <!-- Buscador + íconos -->
+            <div class="col-md-8 d-flex align-items-center">
+              <mat-form-field appearance="outline" class="w-100 buscador-cie me-2">
+                <mat-label>Buscar diagnóstico (CIE10)</mat-label>
+                <input
+                  matInput
+                  [formControl]="diagnosticoControl"
+                  [matAutocomplete]="autoCie10"
+                />
+                <mat-autocomplete
+                  #autoCie10="matAutocomplete"
+                  (optionSelected)="diagnosticoSeleccionado = $event.option.value"
+                  [displayWith]="displayDiagnosticoFn"
+                >
+                  <mat-option *ngFor="let diag of diagnosticosFiltrados" [value]="diag">
+                    {{ diag.catalogKey }} - {{ diag.nombre }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+      
+              <!-- Botón Agregar + Limpiar personalizados -->
+              <div class="d-flex align-items-center gap-2">
+                <button
+                    class="btn btn-primary add-pluss ms-2"
+                  (click)="agregarDiagnosticoDesdeBoton()"
+                  [disabled]="!diagnosticoSeleccionado"
+                  title="Agregar diagnóstico"
+                >
+                  <i class="fa fa-plus"></i>
+                </button>
+      
+                <button
+                  class="btn btn-outline-secondary"
+                  (click)="limpiarBusquedaDiagnostico()"
+                  title="Limpiar búsqueda"
+                >
+                  <i class="fa fa-broom"></i>
+                </button>
+              </div>
+            </div>
+      
+            <!-- Selector tipo -->
+            <div class="col-md-4 d-flex justify-content-end align-items-center gap-2">
+              <div class="btn-group btn-toggle">
+                <button
+                  type="button"
+                  class="btn toggle-btn"
+                  [class.active-toggle]="!esPresuntivo"
+                  (click)="esPresuntivo = false"
+                >Definitivo</button>
+                <button
+                  type="button"
+                  class="btn toggle-btn"
+                  [class.active-toggle]="esPresuntivo"
+                  (click)="esPresuntivo = true"
+                >Presuntivo</button>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Impresión diagnóstica -->
+          <div class="mb-2 mt-3">
+            <label class="form-label">Impresión diagnóstica</label>
+            <textarea
+              class="form-control"
+              rows="2"
+              [(ngModel)]="consultaModel.analisis"
+              (ngModelChange)="dataChange()"
+              [disabled]="consultaModel.idEstadoConsulta !== 2"
+              placeholder="Describe la impresión diagnóstica..."
+            ></textarea>
+          </div>
+      
+          <!-- Pronóstico -->
+          <div class="mb-2">
+            <label class="form-label">Pronóstico</label>
+            <textarea
+              class="form-control"
+              rows="2"
+              [(ngModel)]="consultaModel.pronostico"
+              (ngModelChange)="dataChange()"
+              [disabled]="consultaModel.idEstadoConsulta !== 2"
+              placeholder="Describe el pronóstico..."
+            ></textarea>
+          </div>
+        </div>
+      
+        <!-- DERECHA: lista diagnósticos -->
+        <div class="col-md-3">
+          <div class="border rounded p-3 bg-light shadow-sm">
+            <h6 class="mb-3">Diagnósticos <span class="badge bg-secondary">{{ consultaModel.listaPadecimiento.length }}</span></h6>
+      
+            <ul class="list-group small">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-start"
+                *ngFor="let diag of consultaModel.listaPadecimiento"
+              >
+                <div class="me-auto">
+                  <div class="fw-bold text-primary">{{ diag.catalogKey }}</div>
+                  <div class="text-uppercase">{{ diag.nombrePadecimiento }}</div>
+                  <small class="text-muted">{{ diag.presuntivo ? 'Presuntivo' : 'Definitivo' }}</small>
+                </div>
+                <button
+                  class="btn btn-sm btn-outline-danger ms-2"
+                  (click)="eliminarDiagnostico(diag.cie10Id)"
+                  [disabled]="consultaModel.idEstadoConsulta !== 2"
+                >
+                  <i class="fa fa-times"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      
+      </div>
+      
+      <style>
+        .btn-toggle .toggle-btn {
+          border-radius: 20px;
+          padding: 0.4rem 1rem;
+          font-size: 0.9rem;
+          background-color: #f0f0f0;
+          border: none;
+          color: #555;
+        }
+      
+        .btn-toggle .active-toggle {
+          background-color: #2e37a4;
+          color: white;
+          font-weight: bold;
+        }
+      
+        .buscador-cie .mat-form-field-wrapper {
+          border-radius: 30px;
+          padding-right: 0;
+        }
+      
+        .buscador-cie .mat-form-field-flex {
+          border-radius: 30px;
+          height: 38px;
+          line-height: 1;
+        }
+      
+        .buscador-cie .mat-input-element {
+          font-size: 0.9rem;
+        }
+      </style>
+      
+  
+    <!-- PLAN TERAPÉUTICO -->
+  
+    <div *ngIf="activeTab2 === 'plan'" class="row g-3">
+
+        <!-- IZQUIERDA: búsqueda y comentarios -->
+        <div class="col-md-9">
+          <div class="row g-2 align-items-center">
+      
+            <!-- Buscador + íconos -->
+            <div class="col-md-10 d-flex align-items-center">
+              <mat-form-field appearance="outline" class="w-100 buscador-cie me-2">
+                <mat-label>Buscar tratamiento (CIE9)</mat-label>
+                <input
+                  matInput
+                  [formControl]="tratamientoControl"
+                  [matAutocomplete]="autoCie9"
+                />
+                <mat-autocomplete
+                  #autoCie9="matAutocomplete"
+                  (optionSelected)="tratamientoSeleccionado = $event.option.value"
+                  [displayWith]="displayTratamientoFn"
+                >
+                  <mat-option *ngFor="let t of tratamientosFiltrados" [value]="t">
+                    {{ t.catalogKey }} - {{ t.proNombre }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+      
+              <!-- Botones -->
+              <div class="d-flex align-items-center gap-2">
+                <button
+                  class="btn btn-primary"
+                  (click)="agregarTratamientoDesdeBoton()"
+                  [disabled]="!tratamientoSeleccionado"
+                  title="Agregar tratamiento"
+                >
+                  <i class="fa fa-plus"></i>
+                </button>
+      
+                <button
+                  class="btn btn-outline-secondary"
+                  (click)="limpiarBusquedaTratamiento()"
+                  title="Limpiar búsqueda"
+                >
+                  <i class="fa fa-broom"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Comentarios del plan -->
+          <div class="mb-2 mt-3">
+            <label class="form-label">Comentarios</label>
+            <textarea
+              class="form-control"
+              rows="3"
+              [(ngModel)]="consultaModel.planTerapeutico"
+              (ngModelChange)="dataChange()"
+              [disabled]="consultaModel.idEstadoConsulta !== 2"
+              placeholder="Describe el tratamiento planificado..."
+            ></textarea>
+          </div>
+        </div>
+      
+        <!-- DERECHA: lista tratamientos -->
+        <div class="col-md-3">
+          <div class="border rounded p-3 bg-light shadow-sm">
+            <h6 class="mb-3">Tratamientos <span class="badge bg-secondary">{{ consultaModel.listaTartamiento.length }}</span></h6>
+      
+            <ul class="list-group small">
+              <li
+                class="list-group-item d-flex justify-content-between align-items-start"
+                *ngFor="let t of consultaModel.listaTartamiento"
+              >
+                <div class="me-auto">
+                  <div class="fw-bold text-primary">{{ t.catalogKey }}</div>
+                  <div class="text-uppercase">{{ t.proNombre }}</div>
+                </div>
+                <button
+                  class="btn btn-sm btn-outline-danger ms-2"
+                  (click)="eliminarTratamiento(t.catCie9Id)"
+                  [disabled]="consultaModel.idEstadoConsulta !== 2"
+                >
+                  <i class="fa fa-times"></i>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      
+      </div>
+      
+    <div class="text-end mt-4">
+      <button class="btn btn-primary" (click)="guardarConsulta()">Guardar Consulta</button>
+    </div>
+  </div>
+  

@@ -1,0 +1,19 @@
+<ul class="nav nav-tabs custom-tabs">
+  <li class="nav-item">
+    <a class="nav-link" [class.active]="seccionActual === 'hoja'" (click)="cambiarSeccion('hoja')">
+      Hoja de Seguimiento
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" [class.active]="seccionActual === 'niveles'" (click)="cambiarSeccion('niveles')">
+      Niveles de Telemetría
+    </a>
+  </li>
+</ul>
+
+<div class="tab-content mt-4">
+  <app-hoja-seguimiento *ngIf="seccionActual === 'hoja'" [pacienteId]="idPaciente"></app-hoja-seguimiento>
+  <app-niveles-telemetria *ngIf="seccionActual === 'niveles'" [pacienteId]="idPaciente"></app-niveles-telemetria>
+</div>
+
+  

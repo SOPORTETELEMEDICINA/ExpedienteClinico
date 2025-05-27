@@ -1,0 +1,69 @@
+<ul class="nav nav-tabs mb-3 border-bottom border-2">
+    <li class="nav-item" *ngFor="let tipo of tipos">
+      <a class="nav-link px-4 py-2 fw-semibold"
+         [ngClass]="{active: tipoSeleccionado === tipo, 'bg-primary text-white': tipoSeleccionado === tipo, 'text-dark': tipoSeleccionado !== tipo}"
+         (click)="seleccionarTipo(tipo)"
+         style="cursor: pointer; border-radius: 0;">
+        {{ tipo | titlecase }}
+      </a>
+    </li>
+  </ul>
+  
+  <div class="rangos-wrapper row mb-3 g-3">
+    <div class="col-md-auto" *ngFor="let campo of camposRangos[tipoSeleccionado]">
+      <div class="form-floating">
+        <input type="number"
+               [(ngModel)]="indicacion[campo.key]"
+               class="form-control text-center shadow-sm"
+               style="min-width: 110px; height: 50px; border-radius: 0.75rem; border: 1px solid #ced4da;" />
+        <label class="form-label fw-semibold small">{{ campo.label }}</label>
+      </div>
+    </div>
+  </div>
+  
+  <div class="tabla-horarios table-responsive">
+    <table class="table table-bordered align-middle text-center shadow-sm">
+      <thead style="background-color: #2c3eaa; color: white;">
+        <tr>
+          <th style="width: 40px;"><i class="bi bi-check-square"></i></th>
+          <th class="text-start">Periodo</th>
+          <th>Hora</th>
+          <th *ngFor="let dia of dias">{{ dia }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let periodo of periodos; index as i" [ngClass]="{ 'table-light': i % 2 === 0 }">
+          <td>
+            <input type="checkbox"
+                   [checked]="isPeriodoActivo(i)"
+                   (change)="togglePeriodoActivo(i, $any($event.target).checked)" />
+          </td>
+          <td class="text-start">{{ labels[i] }}</td>
+          <td>
+            <input type="time"
+                   class="form-control text-center shadow-sm"
+                   [(ngModel)]="indicacion[tipoAbreviado + (i+1) + 'hora']"
+                   step="1"
+                   style="min-width: 150px; border-radius: 0.75rem; height: 42px; font-weight: 500;"
+                   [disabled]="tipoSeleccionado === 'glucosa' && i === 7 || !isPeriodoActivo(i)"
+                   (ngModelChange)="onHoraChange(i)" />
+          </td>
+          <td *ngFor="let dia of dias">
+            <input type="checkbox"
+                   class="form-check-input"
+                   [(ngModel)]="indicacion[tipoAbreviado + (i+1) + dia]"
+                   [disabled]="!isPeriodoActivo(i)" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="text-end mt-4">
+    <button class="btn px-4 py-2 fw-semibold shadow rounded d-inline-flex align-items-center gap-2"
+            [ngStyle]="{ 'background-color': '#20c997', 'border': 'none', 'color': 'white' }"
+            (click)="guardar()">
+      <i class="bi bi-save"></i> GUARDAR
+    </button>
+  </div>
+  

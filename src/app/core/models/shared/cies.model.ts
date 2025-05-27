@@ -1,0 +1,61 @@
+export class Cie9 {
+    catalogKey: string;
+    idCie9: number;
+    proNombre: string;
+    procedimientoType: string;
+}
+
+export class Cie10 {
+    catalogKey: string;
+    descripcionCapitulo: string;
+    idCie10: number;
+    nombre: string;
+    presumptive: boolean;
+    asterisco: string;
+    birmm: string;
+    codSitLesion: string;
+    codigox: string;
+    cveCausaType: string;
+    daga: string;
+    diaCapituloType: string;
+    edasEIrasEnM5: string;
+    epiClave: string;
+    epiClaveDesc: string;
+    epiMorta: string;
+    epiMortaM5: string;
+    erradicado: string;
+    esCauses: string;
+    esSuiveEstBrote: string;
+    esSuiveEstEpi: string;
+    esSuiveMorb: string;
+    esSuiveMorta: string;
+    esSuiveNotin: string;
+    fetal: string;
+    letra: string;
+    lgbd165: string;
+    lgbd190: string;
+    linf: string;
+    lista1: string;
+    lista5: string;
+    lmMorbi: string;
+    lmMorta: string;
+    lomsbeck: string;
+    lsex: string;
+    lsup: string;
+    nin: string;
+    ninmtobs: string;
+    ninter: string;
+    noAph: string;
+    noCbd: string;
+    notdiaria: string;
+    notsemanal: string;
+    numCauses: string;
+    prinmorbi: string;
+    prinmorta: string;
+    rubricaType: string;
+    sinac: string;
+    sistemaEspecial: string;
+    trivial: string;
+    yearAplicacion: string;
+    yearModifi: string;
+}

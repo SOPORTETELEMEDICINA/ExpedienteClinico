@@ -1,0 +1,165 @@
+.selector-tipo-telemetria {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  
+    .tipo-radio {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+  
+  .rangos-telemetria {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  
+    label {
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+    }
+  
+    input {
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+  }
+  
+  .tabla-horarios {
+    overflow-x: auto;
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+  
+      th,
+      td {
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+  
+      th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+      }
+    }
+  }
+  
+  .btn-guardar {
+    background-color: #3b38ff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: #3b38ff;
+    }
+  }
+  .tabla-horarios {
+    overflow-x: auto;
+  
+    table {
+      min-width: 600px;
+      width: 100%;
+    }
+  }  
+
+  .tabla-horarios {
+    table {
+      tr:nth-child(even) {
+        background-color: #f3f6ff; // azul clarito
+      }
+  
+      tr:nth-child(odd) {
+        background-color: #ffffff;
+      }
+  
+      td, th {
+        vertical-align: middle;
+      }
+  
+      th {
+        background-color: #eef2ff; // Azul clarito
+        color: #3b38ff;            // Azul del branding
+        font-weight: bold;
+      }
+    }
+
+    .periodo-label {
+      text-align: left;
+      font-weight: 500;
+      padding-left: 8px;
+    }
+  
+    input[type="checkbox"] {
+      transform: scale(1.2);
+    }
+  }
+  
+  input[type="time"] {
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    padding: 6px 14px;
+    font-size: 14px;
+    height: 38px;
+    background-color: white;
+    appearance: none;
+  
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(45%) sepia(100%) saturate(300%) hue-rotate(185deg);
+      cursor: pointer;
+    }
+  }
+  
+  
+
+
+
+  .rangos-telemetria {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  
+    .campo {
+      flex: 1 1 150px;
+      label {
+        font-size: 13px;
+        display: block;
+        margin-bottom: 5px;
+      }
+  
+      input {
+        width: 100%;
+        padding: 6px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .tipo-tabs {
+    margin-bottom: 1rem;
+  
+    .nav-link {
+      cursor: pointer;
+      color: #6c757d;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+    }
+  
+    .nav-link.active {
+      background-color: #3b38ff;
+      color: white;
+      border-radius: 0.5rem;
+    }
+  }

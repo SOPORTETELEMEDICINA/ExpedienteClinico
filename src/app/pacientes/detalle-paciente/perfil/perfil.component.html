@@ -1,0 +1,222 @@
+<div class="accordion" id="perfilAcordeon">
+  <!-- Datos generales -->
+  <div class="accordion-item mb-3">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#datosGenerales">
+        <i class="fas fa-map-marker-alt me-2"></i> DATOS GENERALES
+      </button>
+    </h2>
+    <div id="datosGenerales" class="accordion-collapse collapse">
+      <div class="accordion-body">
+        <div class="datos-seccion p-4">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="label">Nombre(s):</div>
+              <div class="value">{{ patientDetails?.nombre || '-' }}</div>
+            </div>
+            <div class="col-md-6">
+              <div class="label">Apellido Paterno:</div>
+              <div class="value">{{ patientDetails?.apellidoPaterno || '-' }}</div>
+            </div>
+          </div>
+  
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="label">Apellido Materno:</div>
+              <div class="value">{{ patientDetails?.apellidoMaterno || '-' }}</div>
+            </div>
+            <div class="col-md-6">
+              <div class="label">Fecha de Nacimiento:</div>
+              <div class="value">{{ patientDetails?.fechaNacimiento | date: 'dd MMMM yyyy' }}</div>
+            </div>
+          </div>
+  
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="label">CURP:</div>
+              <div class="value">{{ patientDetails?.curp || '-' }}</div>
+            </div>
+            <div class="col-md-6">
+              <div class="label">RFC:</div>
+              <div class="value">{{ patientDetails?.rfc || '-' }}</div>
+            </div>
+          </div>
+  
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="label">Lugar de Nacimiento:</div>
+              <div class="value">{{ patientDetails?.lugarNacimiento || '-' }}</div>
+            </div>
+            <div class="col-md-6">
+              <div class="label">Sexo:</div>
+              <div class="value">{{ patientDetails?.sexo || '-' }}</div>
+            </div>
+          </div>
+  
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="label">Nacionalidad:</div>
+              <div class="value">{{ patientDetails?.lugarNacimiento || '-' }}</div>
+            </div>
+            <div class="col-md-6">
+              <div class="label">Estado Civil:</div>
+              <div class="value">{{ patientDetails?.estadoCivil || '-' }}</div>
+            </div>
+          </div>
+  
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="label">Religión:</div>
+              <div class="value">{{ patientDetails?.religion || '-' }}</div>
+            </div>
+            <div class="col-md-6">
+              <div class="label">Usuario:</div>
+              <div class="value">{{ patientDetails?.userName || '-' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+<!-- Datos clínicos -->
+<div class="accordion-item mb-3">
+  <h2 class="accordion-header">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#datosClinicos">
+      <i class="fas fa-notes-medical me-2"></i> DATOS CLÍNICOS
+    </button>
+  </h2>
+  <div id="datosClinicos" class="accordion-collapse collapse">
+    <div class="accordion-body">
+      <div class="datos-seccion p-4">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="label">Tipo de Sangre:</div>
+            <div class="value">{{ patientDetails?.tipoSangre || '-' }}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="label">Alergias:</div>
+            <div class="value">{{ patientDetails?.alergias || 'NINGUNA' }}</div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="label">Derechohabiencia:</div>
+            <div class="value">{{ patientDetails?.afiliacion || '-' }}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="label">No. Afiliación:</div>
+            <div class="value">{{ patientDetails?.numeroAfiliacion || '-' }}</div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="label">Padecimiento Crónico:</div>
+            <div class="value">{{ patientDetails?.padecimientoCronico || 'NA' }}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="label">Transfusiones:</div>
+            <div class="value">{{ patientDetails?.transfusiones || 'NA' }}</div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12">
+            <div class="label">Antecedentes:</div>
+            <div class="value">{{ patientDetails?.datosAdicionalesView?.antecedentes || '-' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Datos complementarios -->
+<div class="accordion-item mb-3">
+  <h2 class="accordion-header">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#datosComplementarios">
+      <i class="fas fa-clipboard-list me-2"></i> DATOS COMPLEMENTARIOS
+    </button>
+  </h2>
+  <div id="datosComplementarios" class="accordion-collapse collapse">
+    <div class="accordion-body">
+      <div class="datos-seccion p-4">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="label">Escolaridad:</div>
+            <div class="value">{{ patientDetails?.datosAdicionalesView?.escolaridad || '-' }}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="label">Ocupación Actual:</div>
+            <div class="value">{{ patientDetails?.datosAdicionalesView?.ocupacion || '-' }}</div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <div class="label">Ocupación Anterior:</div>
+            <div class="value">{{ patientDetails?.datosAdicionalesView?.ocupacionAnterior || '-' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contactos -->
+<div class="accordion-item mb-3">
+  <h2 class="accordion-header">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#contactos">
+      <i class="fas fa-user-friends me-2"></i> CONTACTOS
+    </button>
+  </h2>
+  <div id="contactos" class="accordion-collapse collapse">
+    <div class="accordion-body">
+      <div class="datos-seccion p-4">
+        <div *ngIf="patientDetails?.datosContactoViewList?.length > 0; else sinContactos">
+          <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+              <thead class="table-light text-center">
+                <tr>
+                  <th>Prioridad</th>
+                  <th>Nombre</th>
+                  <th>Parentesco</th>
+                  <th>Teléfono Local</th>
+                  <th>Teléfono Celular</th>
+                  <th>Teléfono Oficina</th>
+                  <th>Llaves</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let contacto of patientDetails.datosContactoViewList">
+                  <td>{{ contacto?.prioridad || '-' }}</td>
+                  <td>{{ contacto?.nombre || '-' }}</td>
+                  <td>{{ contacto?.parentesco || '-' }}</td>
+                  <td>{{ contacto?.telefonoLocal || '-' }}</td>
+                  <td>{{ contacto?.telefonoCelular || '-' }}</td>
+                  <td>{{ contacto?.telefonoOficina || '-' }}</td>
+                  <td>
+                    <span *ngIf="contacto?.cuentaConLlaves; else noLlaves">Sí</span>
+                    <ng-template #noLlaves>No</ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <ng-template #sinContactos>
+          <p class="text-muted fst-italic">No hay contactos registrados.</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+

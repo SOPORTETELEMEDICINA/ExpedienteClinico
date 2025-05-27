@@ -1,0 +1,74 @@
+<div class="modal fade show d-block" *ngIf="mostrar" tabindex="-1" role="dialog" style="background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Agregar nivel de {{ tipo }}</h5>
+        <button type="button" class="btn-close" (click)="cerrar()"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="guardar()" *ngIf="!cargando">
+          <div class="mb-3">
+            <label class="form-label">Periodo</label>
+            <select class="form-select" [(ngModel)]="model.periodo" name="periodo" required>
+              <option *ngFor="let p of periodos" [value]="p.id">{{ p.nombre }}</option>
+            </select>
+          </div>
+
+          <!-- Campos específicos por tipo -->
+          <ng-container [ngSwitch]="tipo">
+            <div *ngSwitchCase="'GLUCOSA'" class="mb-3">
+              <label class="form-label">Medida (mg/dl)</label>
+              <input type="number" class="form-control" [(ngModel)]="model.medida" name="medida" required>
+            </div>
+
+            <ng-container *ngSwitchCase="'PRESION ARTERIAL'">
+              <div class="mb-3">
+                <label class="form-label">Sistólica</label>
+                <input type="number" class="form-control" [(ngModel)]="model.sistolica" name="sistolica" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Diastólica</label>
+                <input type="number" class="form-control" [(ngModel)]="model.diastolica" name="diastolica" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Frecuencia cardiaca</label>
+                <input type="number" class="form-control" [(ngModel)]="model.fc" name="fc" required>
+              </div>
+            </ng-container>
+
+            <div *ngSwitchCase="'PESO'" class="mb-3">
+              <label class="form-label">Peso (kg)</label>
+              <input type="number" class="form-control" [(ngModel)]="model.peso" name="peso" required>
+            </div>
+
+            <ng-container *ngSwitchCase="'SIGNOS VITALES'">
+              <div class="mb-3">
+                <label class="form-label">Temperatura (°C)</label>
+                <input type="number" class="form-control" [(ngModel)]="model.temp" name="temp" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">SpO₂ (%)</label>
+                <input type="number" class="form-control" [(ngModel)]="model.spo" name="spo" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Pulso</label>
+                <input type="number" class="form-control" [(ngModel)]="model.pulso" name="pulso" required>
+              </div>
+            </ng-container>
+          </ng-container>
+        </form>
+
+        <div *ngIf="cargando" class="text-center my-3">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Guardando...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrar()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" (click)="guardar()" [disabled]="cargando">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

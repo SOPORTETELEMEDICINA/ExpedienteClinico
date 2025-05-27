@@ -1,0 +1,44 @@
+:host ::ng-deep .modal-content {
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+:host ::ng-deep .modal-header {
+  background-color: #007bff;
+  color: white;
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+:host ::ng-deep .modal-footer {
+  border-top: 1px solid #dee2e6;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+:host ::ng-deep .form-label {
+  font-weight: 500;
+}
+
+:host ::ng-deep .form-control,
+:host ::ng-deep .form-select {
+  border-radius: 8px;
+}
+
+:host ::ng-deep .btn-close {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: white;
+  opacity: 0.8;
+}
+
+:host ::ng-deep .btn-close:hover {
+  opacity: 1;
+}
+
+:host ::ng-deep .spinner-border {
+  width: 2rem;
+  height: 2rem;
+}

@@ -1,0 +1,137 @@
+<div class="page-wrapper">
+  <div class="content">
+
+    <!-- Breadcrumb -->
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/medicos']">Médicos</a></li>
+            <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+            <li class="breadcrumb-item active">Lista de Médicos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="row">
+      <div class="col-sm-12">
+
+        <div class="card card-table show-entire">
+          <div class="card-body">
+
+            <!-- Header de la tabla -->
+            <div class="page-table-header mb-2">
+              <div class="row align-items-center">
+                <div class="col">
+                  <div class="doctor-table-blk">
+                    <h3>Lista de Médicos</h3>
+                    <div class="doctor-search-blk">
+                      <div class="top-nav-search table-search-blk">
+                        <input #txtBuscar type="text" class="form-control" placeholder="Buscar médico..." (keyup)="buscar()">
+                        <a class="btn" (click)="buscar()"><img src="assets/img/icons/search-normal.svg" alt="Buscar"></a>
+                      </div>
+                      <div class="add-group">
+                        <a [routerLink]="['/medicos/agregar']" class="btn btn-primary add-pluss ms-2">
+                          <img src="assets/img/icons/plus.svg" alt="Agregar">
+                        </a>
+                        <a class="btn btn-primary doctor-refresh ms-2" (click)="recargarMedicos()">
+                          <img src="assets/img/icons/re-fresh.svg" alt="Refrescar">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabla -->
+            <div class="table-responsive">
+              <table class="table border-0 custom-table comman-table datatable mb-0">
+                <thead>
+                  <tr>
+                    <th (click)="ordenarPor('nombre')" class="cursor-pointer">
+                      NOMBRE
+                      <i class="bi ms-1" [ngClass]="{
+                        'bi-caret-up-fill': columnaOrden === 'nombre' && ordenAscendente,
+                        'bi-caret-down-fill': columnaOrden === 'nombre' && !ordenAscendente,
+                        'opacity-25': columnaOrden !== 'nombre'
+                      }"></i>
+                    </th>
+                    <th>CURP</th>
+                    <!-- <th (click)="ordenarPor('especialidades')" class="cursor-pointer">
+                      Especialidades
+                      <i class="bi ms-1" [ngClass]="{
+                        'bi-caret-up-fill': columnaOrden === 'especialidades' && ordenAscendente,
+                        'bi-caret-down-fill': columnaOrden === 'especialidades' && !ordenAscendente,
+                        'opacity-25': columnaOrden !== 'especialidades'
+                      }"></i>
+                    </th> -->
+                    <th>ESPECIALIDADES</th>
+
+                    <th (click)="ordenarPor('email')" class="cursor-pointer">
+                      EMAIL
+                      <i class="bi ms-1" [ngClass]="{
+                        'bi-caret-up-fill': columnaOrden === 'email' && ordenAscendente,
+                        'bi-caret-down-fill': columnaOrden === 'email' && !ordenAscendente,
+                        'opacity-25': columnaOrden !== 'email'
+                      }"></i>
+                    </th>
+                    <th class="text-end">ACCIONES</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let medico of medicos">
+                    <td>{{ medico.nombre }}</td>
+                    <td>{{ medico.curp }}</td>
+                    <td>
+                      <div *ngFor="let esp of medico.especialidadViewList">
+                        {{ esp.especialidad }}
+                      </div>
+                    </td>
+                    <td>{{ medico.email }}</td>
+                    <td class="text-end">
+                      <a [routerLink]="['/medicos/editar', medico.idMedico]" class="btn btn-sm btn-outline-primary">Editar</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Footer tabla -->
+              <div class="table_footer mt-4">
+                <div class="row align-items-center">
+                  <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_info ps-2">
+                      Mostrando {{ fin }} de {{ totalRegistros }} registros
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-6">
+                    <div class="pagination_section d-flex justify-content-end pe-2">
+                      <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item" [class.disabled]="paginaActual === 1">
+                          <a class="page-link" (click)="cambiarPagina(paginaActual - 1)">Anterior</a>
+                        </li>
+                        <li *ngFor="let p of paginas" class="page-item" [class.active]="p === paginaActual">
+                          <a class="page-link" (click)="cambiarPagina(p)">{{ p }}</a>
+                        </li>
+                        <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
+                          <a class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div> <!-- /table-responsive -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,172 @@
+.custom-modal-size {
+  max-width: 90%;
+  width: 70vw;
+}
+
+.btn-outline-primary,
+.btn-outline-secondary {
+  width: 40px;
+  height: 40px;
+}
+
+// --- Fila de caso clínico ---
+tr.caso-row {
+  position: relative;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+tr[data-caso-row] td:first-child {
+  border-left: 5px solid #c2c2c2;
+  transition: border-color 0.3s ease;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+tr[data-caso-row]:hover td:first-child {
+  border-left-color: #2e37a4;
+  background-color: #f9f9fc;
+  cursor: pointer;
+}
+
+tr.caso-row.activa td:first-child {
+  border-left-color: #2e37a4;
+  background-color: #f5f7ff;
+}
+
+tr.caso-row.activa {
+  background-color: #f9f9fc;
+}
+
+// --- Detalle de consulta (tipo ficha con tabs + acordeones) ---
+
+.acordeon-ficha {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px #e0e0e0;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.acordeon-ficha table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.detalle-consulta-container {
+  margin-top: 1rem;
+  background: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.detalle-container {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 1px #ccc;
+  padding: 0;
+  overflow: hidden;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.overflow-auto {
+  overflow-x: auto;
+}
+
+.detalle-consulta-container {
+  overflow-x: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.header-ficha {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  background-color: #0a2c5e;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+
+  > div {
+    padding: 0.5rem 1rem;
+    border-right: 1px solid #0d3b8e;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}
+
+// --- Tabs responsivos ---
+.tab-selector {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid #ddd;
+  background-color: #fafafa;
+
+  .tab {
+    flex: 1 0 auto;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: #444;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease-in-out;
+    white-space: nowrap;
+
+    &.active {
+      border-bottom: 3px solid #2e37a4;
+      color: #2e37a4;
+    }
+
+    &:hover {
+      background-color: #f7f7f7;
+    }
+  }
+}
+
+.tab-content {
+  padding: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+// --- Acordeones de columna lateral ---
+.accordion-column {
+  border-left: 1px solid #eee;
+  padding: 0.5rem;
+  background-color: #fafafa;
+
+  .accordion-item {
+    margin-bottom: 0.5rem;
+    border: none;
+
+    .accordion-button {
+      background-color: transparent;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      color: #333;
+      box-shadow: none;
+
+      &:not(.collapsed) {
+        background-color: #f0f0f0;
+        color: #2e37a4;
+      }
+    }
+
+    .accordion-body {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+
+.small-box {
+  font-size: 0.85rem;
+  min-height: 60px;
+}

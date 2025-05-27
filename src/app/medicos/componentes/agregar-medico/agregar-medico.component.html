@@ -1,0 +1,194 @@
+<div class="page-wrapper">
+  <div class="content">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a [routerLink]="['/medicos']">Médicos</a>
+            </li>
+            <li class="breadcrumb-item active">
+              {{ isEditingDoctor ? 'Editar Médico' : 'Nuevo Médico' }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="formularioMedico" (ngSubmit)="guardarMedico()">
+      <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+        <li class="nav-item" (click)="cambiarTab(0)">
+          <a class="nav-link" [class.active]="currentTab === 0" href="javascript:void(0)">Datos Generales</a>
+        </li>
+        <li class="nav-item" (click)="cambiarTab(1)">
+          <a class="nav-link" [class.active]="currentTab === 1" href="javascript:void(0)">Datos Escolares</a>
+        </li>
+        <li class="nav-item" (click)="cambiarTab(2)">
+          <a class="nav-link" [class.active]="currentTab === 2" href="javascript:void(0)">Horarios</a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <!-- DATOS GENERALES -->
+        <div *ngIf="currentTab === 0" class="tab-pane show active">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6" *ngFor="let field of generalFields">
+                  <div class="form-group local-forms">
+                    <label>{{ field.label }} <span *ngIf="field.required" class="login-danger">*</span></label>
+                    <input class="form-control" [formControlName]="field.control" [type]="field.type || 'text'" />
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group local-forms">
+                    <label>Imagen del Médico</label>
+                    <input type="file" class="form-control" (change)="onFileSelected($event)" />
+                  </div>
+                </div>
+
+                <!-- DOMICILIO NUEVO -->
+                <div class="col-12 mt-4">
+                  <div class="form-heading d-flex justify-content-between align-items-center">
+                    <h5>Domicilio Nuevo</h5>
+                    <button type="button" class="btn btn-outline-primary btn-sm" (click)="agregarDomicilio()">Agregar Domicilio</button>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-3" *ngFor="let input of domicilioInputs">
+                      <div class="form-group local-forms">
+                        <label>{{ input.label }}</label>
+                        <input class="form-control" [(ngModel)]="nuevoDomicilio[input.key]" [name]="input.key" [ngModelOptions]="{ standalone: true }" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Tabla de Domicilios -->
+                  <div class="table-responsive mt-3" formArrayName="domicilios">
+                    <table class="table table-bordered" *ngIf="getDomicilios().length > 0">
+                      <thead>
+                        <tr>
+                          <th *ngFor="let input of domicilioInputs">{{ input.label }}</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let d of getDomicilios().controls; let i = index" [formGroupName]="i">
+                          <td *ngFor="let input of domicilioInputs">
+                            <input class="form-control" [formControlName]="input.key" />
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="eliminarDomicilio(i)">Eliminar</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DATOS ESCOLARES -->
+        <div *ngIf="currentTab === 1" class="tab-pane show active">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-heading d-flex justify-content-between align-items-center">
+                <h5>Especialidades</h5>
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="agregarEspecialidad()">Agregar Especialidad</button>
+              </div>
+              <div class="row">
+                <div class="col-md-4" *ngFor="let input of especialidadInputs">
+                  <div class="form-group local-forms">
+                    <label>{{ input.label }}</label>
+                    <input class="form-control" [(ngModel)]="nuevaEspecialidad[input.key]" [name]="input.key" [ngModelOptions]="{ standalone: true }" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tabla de Especialidades -->
+              <div class="table-responsive mt-3" formArrayName="especialidades">
+                <table class="table table-bordered" *ngIf="getEspecialidades().length > 0">
+                  <thead>
+                    <tr>
+                      <th *ngFor="let input of especialidadInputs">{{ input.label }}</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let e of getEspecialidades().controls; let i = index" [formGroupName]="i">
+                      <td *ngFor="let input of especialidadInputs">
+                        <input class="form-control" [formControlName]="input.key" />
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="eliminarEspecialidad(i)">Eliminar</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- HORARIOS -->
+        <div *ngIf="currentTab === 2" class="tab-pane show active">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-heading d-flex justify-content-between align-items-center">
+                <h5>Horarios</h5>
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="agregarHorario()">Agregar Horario</button>
+              </div>
+              <div class="row">
+                <div class="col-md-4" *ngFor="let input of horarioInputs">
+                  <div class="form-group local-forms">
+                    <label>{{ input.label }}</label>
+                    <input *ngIf="input.key !== 'dia'" class="form-control" [type]="input.key.includes('hora') ? 'time' : 'text'" [(ngModel)]="nuevoHorario[input.key]" [name]="input.key" [ngModelOptions]="{ standalone: true }" />
+                    <select *ngIf="input.key === 'dia'" class="form-control" [(ngModel)]="nuevoHorario[input.key]" [name]="input.key" [ngModelOptions]="{ standalone: true }">
+                      <option *ngFor="let d of diasSemana" [value]="d">{{ d }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <!-- Tabla de Horarios -->
+              <div class="table-responsive mt-3" formArrayName="horarios">
+                <table class="table table-bordered" *ngIf="getHorarios().length > 0">
+                  <thead>
+                    <tr>
+                      <th *ngFor="let input of horarioInputs">{{ input.label }}</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let h of getHorarios().controls; let i = index" [formGroupName]="i">
+                      <td><select class="form-control" formControlName="dia">
+                        <option *ngFor="let d of diasSemana" [value]="d">{{ d }}</option>
+                      </select></td>
+                      <td><input class="form-control" type="time" formControlName="horaInicio" /></td>
+                      <td><input class="form-control" type="time" formControlName="horaFin" /></td>
+                      <td>
+                        <button type="button" class="btn btn-danger btn-sm" (click)="eliminarHorario(i)">Eliminar</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-secondary" [disabled]="currentTab === 0" (click)="cambiarTab(currentTab - 1)">Anterior</button>
+        <div>
+          <button type="button" class="btn btn-outline-secondary me-2" [disabled]="currentTab === 2" (click)="cambiarTab(currentTab + 1)">Siguiente</button>
+          <button type="submit" class="btn btn-primary" [disabled]="currentTab !== 2">Guardar Médico</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

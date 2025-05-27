@@ -1,0 +1,157 @@
+<div class="page-wrapper">
+    <div class="content">
+  
+      <!-- Breadcrumb -->
+      <div class="page-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">Consultas</li>
+              <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+              <li class="breadcrumb-item active">Lista de Consultas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Contenido -->
+      <div class="row">
+        <div class="col-sm-12">
+  
+          <div class="card card-table show-entire">
+            <div class="card-body">
+  
+              <!-- Header de la tabla -->
+              <div class="page-table-header mb-2">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <div class="doctor-table-blk">
+                      <h3>Lista de Consultas</h3>
+                      <div class="doctor-search-blk">
+                        <div class="top-nav-search table-search-blk">
+                          <input #txtBuscar type="text" class="form-control" placeholder="Buscar consulta por nombre..." (keyup)="buscar()">
+                          <a class="btn" (click)="buscar()">
+                            <img src="assets/img/icons/search-normal.svg" alt="Buscar">
+                          </a>
+                        </div>
+                        <div class="add-group">
+                          <a class="btn btn-primary doctor-refresh ms-2" (click)="recargarConsultas()">
+                            <img src="assets/img/icons/re-fresh.svg" alt="Refrescar">
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-auto d-flex gap-2">
+                    <input type="date" class="form-control" [(ngModel)]="fechaInicio" (change)="buscarConsultas()" />
+                    <input type="date" class="form-control" [(ngModel)]="fechaFin" (change)="buscarConsultas()" />
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Tabla -->
+              <div class="table-responsive">
+                <table class="table border-0 custom-table comman-table datatable mb-0">
+                  <thead>
+                    <tr>
+                      <th>NOMBRE / EXPEDIENTE</th>
+                      <th (click)="ordenarPor('fechaConsulta')" class="cursor-pointer">
+                        FECHA / CONSULTA
+                        <i class="bi ms-1" [ngClass]="{
+                          'bi-caret-up-fill': columnaOrden === 'fechaConsulta' && ordenAscendente,
+                          'bi-caret-down-fill': columnaOrden === 'fechaConsulta' && !ordenAscendente,
+                          'opacity-25': columnaOrden !== 'fechaConsulta'
+                        }"></i>
+                      </th>
+                      <th>TIPO DE CONSULTA</th>
+                      <th>MOTIVO</th>
+                      <th>ESTATUS</th>
+                      <th class="text-end">ACCIÓN</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="isLoading">
+                      <td colspan="100%" class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                          <span class="visually-hidden">Cargando...</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr *ngFor="let consulta of consultas">
+                      <td>
+                        <strong>{{ consulta.nombrePaciente }}</strong>
+                      </td>
+                      <td>
+                        {{ consulta.fechaConsulta | date: 'dd MMM yyyy' }}<br />
+                        <small class="text-muted">{{ consulta.fechaConsulta | date: 'hh:mm a' }}</small>
+                      </td>
+                      <td>
+                        <span class="badge bg-primary">{{ consulta.tipoConsulta }}</span><br />
+                        <small>{{ consulta.canal }}</small>
+                      </td>
+                      <td>{{ consulta.motivoConsulta || '---' }}</td>
+                      <td>
+                        <span class="badge text-white" [ngClass]="{
+                          'bg-success': consulta.estadoConsulta === 'FINALIZADA',
+                          'bg-info': consulta.estadoConsulta === 'CONSULTA EN TURNO',
+                          'bg-secondary': true
+                        }">
+                          {{ consulta.estadoConsulta }}
+                        </span>
+                      </td>
+                      <td class="text-end">
+                        <a class="btn btn-outline-primary btn-sm" 
+                        [routerLink]="['/pacientes/detalle', consulta.idPaciente, 'consulta-actual']"
+                        [queryParams]="{ idConsulta: consulta.idConsulta }" >
+                          {{ consulta.estadoConsulta === 'FINALIZADA' ? 'Nota médica' : 'Ir a consulta' }}
+                        </a>
+                      </td>
+                    </tr>
+                    <tr *ngIf="consultas.length === 0 && !isLoading">
+                      <td colspan="6" class="text-center text-muted py-4">No hay consultas registradas.</td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+                <!-- Footer tabla -->
+                <div class="table_footer mt-4" *ngIf="totalConsultas > 0">
+                  <div class="row align-items-center">
+                    <div class="col-sm-12 col-md-6">
+                      <div class="dataTables_info ps-2">
+                        Mostrando {{ fin }} de {{ totalConsultas }} resultados
+                      </div>
+                    </div>
+  
+                    <div class="col-sm-12 col-md-6">
+                      <div class="pagination_section d-flex justify-content-end pe-2">
+                        <ul class="pagination pagination-sm mb-0">
+                          <li class="page-item" [class.disabled]="paginaActual === 1">
+                            <a class="page-link" (click)="cambiarPagina(paginaActual - 1)">Anterior</a>
+                          </li>
+                          <ng-container *ngFor="let p of paginasReducidas">
+                            <li *ngIf="p !== '...'" class="page-item" [class.active]="p === paginaActual">
+                              <a class="page-link" (click)="cambiarPagina(p)">{{ p }}</a>
+                            </li>
+                            <li *ngIf="p === '...'" class="page-item disabled">
+                              <span class="page-link">...</span>
+                            </li>
+                          </ng-container>
+                          <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
+                            <a class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+              </div> <!-- /table-responsive -->
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  

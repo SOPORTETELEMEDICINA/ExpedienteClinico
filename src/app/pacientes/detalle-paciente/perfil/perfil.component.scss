@@ -1,0 +1,107 @@
+.accordion-item {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  border: none;
+  margin-bottom: 1rem;
+}
+
+.accordion-button {
+  background-color: #fff;
+  border-left: 5px solid #2e37a4;
+  font-weight: 600;
+  color: #1e1e1e;
+  box-shadow: none;
+  transition: background-color 0.3s ease;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #f8fafa;
+  color: #2e37a4;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  border-color: #2e37a4;
+}
+
+.accordion-body {
+  background-color: #fff;
+  padding: 1.25rem 1.5rem;
+}
+
+
+.accordion-button:not(.collapsed) i {
+  color: #2e37a4;
+}
+.accordion-button {
+  transition: all 0.3s ease;
+}
+
+
+
+// contenido de los acordiones
+
+.acordeon-ficha {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  margin-bottom: 1.2rem;
+  padding: 1.5rem 2rem;
+}
+
+.acordeon-ficha h5 {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #00bcd4;
+}
+
+.ficha-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 0.75rem;
+  column-gap: 2rem;
+}
+
+.ficha-label {
+  font-weight: 600;
+  color: #4f4f4f;
+  font-size: 0.9rem;
+}
+
+.ficha-value {
+  color: #333;
+  font-size: 0.9rem;
+}
+
+
+.datos-seccion {
+  font-size: 15px;
+
+  .label {
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+
+  .value {
+    color: #212529;
+    font-weight: 500;
+  }
+
+  .row {
+    border-bottom: 1px dashed #dee2e6;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

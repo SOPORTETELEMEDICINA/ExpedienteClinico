@@ -1,0 +1,290 @@
+<!-- ENCABEZADO COMO LOS ACCORDIONES -->
+<!-- TÍTULO: CURSO CLÍNICO -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="fw-bold d-flex align-items-center gap-2" style="color: #2e37a4;">
+        <i class="fa-regular fa-clock"></i>
+        CURSO CLÍNICO
+      </h4>
+  </div>
+  
+  <!-- BARRA: HISTORIA CLÍNICA GENERAL -->
+  <div class="bg-light border-0 rounded shadow-sm px-4 py-3 d-flex justify-content-between align-items-center mb-3 position-relative" style="box-shadow: 0 0 0 1px #e0e0e0;">
+    <!-- Cejita estilo plantilla -->
+    <span style="position: absolute; top: 0; bottom: 0; left: 0; width: 5px; background-color: #2e37a4; border-top-left-radius: 0.5rem; border-bottom-left-radius: 0.5rem;"></span>
+    <!-- Título con ícono -->
+    <div class="fw-bold text-uppercase d-flex align-items-center gap-2 fs-6" style="color: #2e37a4;">
+      <i class="fa-regular fa-folder-open fs-5"></i>
+      Historia Clínica General
+    </div>
+  
+    <!-- Botones -->
+    <div class="d-flex align-items-center gap-2">
+      <button
+        class="btn btn-outline-primary btn-sm d-flex align-items-center justify-content-center"
+        (click)="abrirModal()"
+        title="Ver historia clínica"
+        
+      >
+        <i class="fa-regular fa-file-lines fs-5"></i>
+      </button>
+  
+      <button
+        class="btn btn-outline-secondary btn-sm d-flex align-items-center justify-content-center"
+        (click)="imprimirEvento()"
+        title="Imprimir historia clínica"
+
+      >
+        <i class="fa-solid fa-print fs-5"></i>
+      </button>
+    </div>
+  </div>
+  
+  
+<!-- INICIO CURSO CLÍNICO -->
+
+<div class="table-responsive">
+    <table class="table table-borderless align-middle">
+      <thead class="text-uppercase text-muted small">
+        <tr>
+          <th colspan="2">
+            <i class="fa-solid fa-folder-open text-warning me-2"></i>
+            CASOS Y EVENTO
+          </th>
+          <th><i class="fa-solid fa-calendar-days text-success me-2"></i>FECHAS</th>
+          <th><i class="fa-solid fa-star text-danger me-2"></i>ESTATUS</th>
+          <th><i class="fa-solid fa-user-doctor text-warning me-2"></i>MÉDICO TRATANTE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let caso of paginadoclinicCourseList.content">
+          <!-- Fila principal del caso -->
+          <tr
+            data-caso-row
+            class="caso-row"
+            [class.activa]="casoAbierto === caso.idPadecimiento"
+            (click)="toggleCaso(caso.idPadecimiento)"
+          >
+            <td style="width: 5px; padding: 0;"></td>
+            <td class="text-uppercase fw-semibold py-4 px-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                  <i *ngIf="casoAbierto === caso.idPadecimiento" class="fa-regular fa-folder-open text-secondary fs-5"></i>
+                  <i *ngIf="casoAbierto !== caso.idPadecimiento" class="fa-solid fa-folder text-secondary fs-5"></i>
+                        {{ caso.nombrePadecimiento  }}
+                </div>
+                <div *ngIf="casoAbierto === caso.idPadecimiento" class="d-flex gap-2" (click)="$event.stopPropagation()">
+                  <button class="btn btn-outline-primary btn-sm px-2" title="Ver imágenes">
+                    <i class="fa-solid fa-file-image"></i>
+                  </button>
+                  <button class="btn btn-outline-secondary btn-sm px-2" title="Ver documentos">
+                    <i class="fa-solid fa-file-lines"></i>
+                  </button>
+                </div>
+              </div>
+            </td>
+            <td class="align-middle small text-muted">
+              <div><strong class="text-uppercase text-primary">INICIAL:</strong> {{ caso.fechaCreacion | date:'dd MMMM yyyy' }}</div>
+              <div><strong class="text-uppercase text-primary">ALTA:</strong> {{ caso.fechaAlta || '-' }}</div>
+            </td>
+            <td class="align-middle">
+                <ng-container *ngIf="caso.estatus; else estatusCerrado">
+                  <select class="form-select form-select-sm w-auto" (click)="$event.stopPropagation()"
+                          (change)="cerrarCaso(caso)">
+                    <option value="ABIERTO" selected>ABIERTO</option>
+                    <option value="CERRADO">CERRAR</option>
+                  </select>
+                </ng-container>
+              
+                <ng-template #estatusCerrado>
+                  <span class="badge bg-secondary">CERRADO</span>
+                </ng-template>
+              </td>
+            <td class="align-middle">{{ caso.nombreMedicoTratante  }}</td>
+          </tr>
+  
+        
+
+           <!-- Subtabla de consultas -->
+           <tr *ngIf="casoAbierto === caso.idPadecimiento">
+            <td colspan="5" class="p-0">
+              <div class="acordeon-ficha">
+                
+                <!-- Subtabla de consultas -->
+                <table class="table table-sm table-bordered rounded bg-white">
+                  <thead class="bg-light small text-uppercase text-muted">
+                    <tr>
+                      <th>#</th>
+                      <th>TIPO</th>
+                      <th>FECHA</th>
+                      <th>CONSULTA</th>
+                      <th>MÉDICO TRATANTE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr 
+                      *ngFor="let consulta of caso.consultaViewList; index as i"
+                      (click)="verConsultaDetalle(consulta)"
+                      style="cursor: pointer;">
+                      <td>{{ i + 1 }}</td>
+                      <td class="fw-semibold text-primary">{{ consulta.estadoConsulta }}</td>
+                      <td>{{ consulta.fechaConsulta | date:'dd MMM yyyy - HH:mm' }}</td>
+                      <td>{{ consulta.idConsulta.toString().padStart(10, '0')  }}</td>
+                      <td>{{ consulta.nombreMedico }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+          
+                <!-- Spinner -->
+                <div *ngIf="cargandoConsulta" class="p-3 border rounded text-center text-muted">
+                  <i class="fa-solid fa-spinner fa-spin me-2"></i> Cargando consulta...
+                </div>
+
+                
+                <!-- Detalle de consulta con tabs -->
+                <div *ngIf="consultaSeleccionada && !cargandoConsulta && consultaSeleccionada.idConsulta" class="detalle-consulta-container">
+                  
+                    <!-- Encabezado -->
+                    <div class="header-ficha">
+                      <div>{{ consultaSeleccionada.estadoConsulta }}</div>
+                      <div>{{ consultaSeleccionada.fechaConsulta | date:'dd MMMM yyyy' }}</div>
+                      <div>{{ consultaSeleccionada.idConsulta.toString().padStart(10, '0') }}</div>
+                      <div>{{ consultaSeleccionada.nombreMedico }}</div>
+                    </div>
+            
+                    <!-- Tabs -->
+                    <div class="tab-selector px-3">
+                      <div
+                        *ngFor="let tab of tabs"
+                        class="tab"
+                        [class.active]="activeTab === tab"
+                        (click)="toggleTab(tab)">
+                        {{ tab | titlecase }}
+                      </div>
+                    </div>
+            
+                    <!-- Contenido y acordes -->
+                    <div class="row m-0">
+                      
+                      <!-- Columna izquierda -->
+                      <div class="col-md-8 tab-content">
+            
+                        <div *ngIf="activeTab === 'resumen'">
+                          <p class="text-justify small" style="text-align: justify;">{{ consultaSeleccionada.resumen || 'Sin contenido' }}</p>
+                        </div>
+            
+                        <div *ngIf="activeTab === 'subjetivo'">
+                          <p class="text-justify small" style="text-align: justify;">{{ consultaSeleccionada.subjetivo || 'Sin contenido' }}</p>
+                        </div>
+            
+                        <div *ngIf="activeTab === 'objetivo'" class="mt-3">
+                            <h6 class="fw-bold mb-3">Signos Vitales</h6>
+                            <div class="row g-1">
+                              <div
+                                class="col-6 col-md-3"
+                                *ngFor="let vital of [
+                                  { label: 'Temperatura', value: consultaSeleccionada.signosVitales.temperatura + ' ºC' },
+                                  { label: 'Peso', value: consultaSeleccionada.signosVitales.peso + ' kg' },
+                                  { label: 'Talla', value: consultaSeleccionada.signosVitales.talla + ' cm' },
+                                  { label: 'IMC', value: consultaSeleccionada.signosVitales.imc },
+                                  { label: 'Tensión Arterial', value: consultaSeleccionada.signosVitales.sistolica + ' / ' + consultaSeleccionada.signosVitales.diastolica },
+                                  { label: 'Frec. Cardíaca', value: consultaSeleccionada.signosVitales.frecCardiaca + ' x min.' },
+                                  { label: 'Frec. Respiratoria', value: consultaSeleccionada.signosVitales.frecRespiratoria + ' x min.' },
+                                  { label: 'Sat. Oxígeno', value: consultaSeleccionada.signosVitales.saturacionOxigeno + ' %' },
+                                  { label: 'EVN', value: consultaSeleccionada.signosVitales.evn }
+                                ]"
+                              >
+                                <div class="border rounded p-1 px-2 bg-light small-box">
+                                  <div class="text-uppercase text-muted" style="font-size: 0.75rem;">{{ vital.label }}</div>
+                                  <div class="fw-semibold fs-6">{{ vital.value }}</div>
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <hr class="my-3" />
+                          
+                            <h6 class="fw-bold mb-2">Exploración Física</h6>
+                            <p class="text-justify small" style="text-align: justify;">
+                              {{ consultaSeleccionada.objetivo || 'Sin contenido' }}
+                            </p>
+                          </div>
+                          
+                          
+            
+                        <div *ngIf="activeTab === 'analisis'">
+                          <p class="text-justify small" style="text-align: justify;">{{ consultaSeleccionada.analisis || 'Sin contenido' }}</p>
+                        </div>
+            
+                        <div *ngIf="activeTab === 'tratamiento'">
+                          <p class="text-justify small" style="text-align: justify;">{{ consultaSeleccionada.planTerapeutico || 'Sin contenido' }}</p>
+                        </div>
+                      </div>
+            
+                      <!-- Columna derecha -->
+                      <div class="col-md-4 accordion-column">
+                        <div class="accordion" id="acordeonConsulta">
+                          <div *ngFor="let panel of acordeones" class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button
+                                class="accordion-button collapsed fw-bold text-uppercase"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#flush-' + panel.titulo">
+                                {{ panel.titulo }}
+                              </button>
+                            </h2>
+                            <div [id]="'flush-' + panel.titulo" class="accordion-collapse collapse">
+                              <div class="accordion-body">
+                                <p class="text-muted small">Contenido de {{ panel.titulo.toLowerCase() }}.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+            
+                    </div>
+                  </div>
+          
+
+          
+              </div>
+            </td>
+          </tr>
+  
+          <!-- FIN DE SUBCOSNULTAS -->
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  
+
+<!-- FIN CURSO CLÍNICO -->
+  
+
+  
+  <!-- MODAL FUNCIONAL -->
+  <div
+  class="modal fade"
+  id="modalHistoriaClinica"
+  tabindex="-1"
+  aria-labelledby="modalHCLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl custom-modal-size">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold" id="modalHCLabel">Historia Clínica</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted">Contenido de la historia clínica va aquí.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  

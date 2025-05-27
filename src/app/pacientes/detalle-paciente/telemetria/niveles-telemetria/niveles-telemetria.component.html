@@ -1,0 +1,191 @@
+<div class="telemetria-header mb-4">
+  <div class="d-flex align-items-center gap-3 flex-wrap">
+    <div class="form-group mb-0">
+      <label class="form-label me-2">Tipo:</label>
+      <select class="form-select" [(ngModel)]="tipo" (change)="filtrarNiveles()">
+        <option value="GLUCOSA">GLUCOSA</option>
+        <option value="PRESION ARTERIAL">PRESION ARTERIAL</option>
+        <option value="PESO">PESO</option>
+        <option value="SIGNOS VITALES">SIGNOS VITALES</option>
+      </select>
+    </div>
+
+    <div class="form-group mb-0">
+      <label class="form-label me-2">Visualización:</label>
+      <select class="form-select" [(ngModel)]="selectedModeData">
+        <option value="lista">Lista</option>
+        <option value="grafica">Gráfica</option>
+        <option value="ambos">Ambos</option>
+      </select>
+    </div>
+
+    <div class="form-group mb-0">
+      <label class="form-label me-2">Tipo de gráfica:</label>
+      <select class="form-select" [(ngModel)]="selectedTypeGraph">
+        <option value="line">Lineal</option>
+        <option value="bar">Barras</option>
+      </select>
+    </div>
+
+    <div class="form-group mb-0">
+      <label class="form-label me-2">Periodo:</label>
+      <select class="form-select" [(ngModel)]="periodo">
+        <option value="0">TODOS</option>
+        <option *ngFor="let p of periodos" [value]="p.id">{{ p.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="form-group mb-0">
+      <label class="form-label me-2">Fecha inicio:</label>
+      <input type="date" class="form-control" [(ngModel)]="fecha1">
+    </div>
+
+    <div class="form-group mb-0">
+      <label class="form-label me-2">Fecha fin:</label>
+      <input type="date" class="form-control" [(ngModel)]="fecha2">
+    </div>
+
+    <div class="form-group mb-0">
+      <button class="btn btn-primary mt-4" (click)="filtrarNiveles()">Filtrar</button>
+    </div>
+
+    <div class="form-group mb-0 ms-auto">
+      <button class="btn btn-outline-primary mt-4" (click)="abrirModalNuevoNivel()">
+        <i class="fas fa-plus me-2"></i>Agregar Nivel
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal agregar nivel -->
+<app-nivel-telemetria-modal
+  [tipo]="tipo"
+  [pacienteId]="pacienteId"
+  (nivelGuardado)="filtrarNiveles()"
+  #modalRef>
+</app-nivel-telemetria-modal>
+
+<ng-container *ngIf="tieneDatos(); else sinDatos">
+  <ng-container *ngIf="selectedModeData !== 'lista'">
+    <app-lineal *ngIf="selectedTypeGraph === 'line'"
+      [TIPO]="tipo"
+      [glu]="niveles.glucosa"
+      [pa]="niveles.pa"
+      [peso]="niveles.peso"
+      [covid]="niveles.covid"
+      [titleP]="titleP"
+      [titleG]="titleG"
+      [titlesC]="titlesC"
+      [titlesP]="titlesP">
+    </app-lineal>
+
+    <app-barras *ngIf="selectedTypeGraph === 'bar'"
+      [TIPO]="tipo"
+      [glu]="niveles.glucosa"
+      [pa]="niveles.pa"
+      [peso]="niveles.peso"
+      [covid]="niveles.covid"
+      [mostrarValoresEnBarras]="false">
+    </app-barras>
+  </ng-container>
+
+  <!-- Vista de tabla -->
+  <div *ngIf="(selectedModeData === 'lista' || selectedModeData === 'ambos')">
+    <ng-container [ngSwitch]="tipo">
+      <!-- GLUCOSA -->
+      <ng-container *ngSwitchCase="'GLUCOSA'">
+        <table class="table table-hover text-center align-middle table-striped mb-0">
+          <thead class="table-primary">
+            <tr>
+              <th>Fecha</th>
+              <th>Periodo</th>
+              <th>Medida (mg/dl)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of niveles.glucosa">
+              <td>{{ getFechaFormateada(item.glufechahora) }}</td>
+              <td>{{ obtenerNombrePeriodo(item.gluperiodo) }}</td>
+              <td [ngClass]="getColorEstadoGlucosa(item.glumedida)">{{ item.glumedida }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+
+      <!-- PA -->
+      <ng-container *ngSwitchCase="'PRESION ARTERIAL'">
+        <table class="table table-hover text-center align-middle table-striped mb-0">
+          <thead class="table-primary">
+            <tr>
+              <th>Fecha</th>
+              <th>Periodo</th>
+              <th>Sistólica</th>
+              <th>Diastólica</th>
+              <th>FC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of niveles.pa">
+              <td>{{ getFechaFormateada(item.pafechahora) }}</td>
+              <td>{{ obtenerNombrePeriodo(item.paperiodo) }}</td>
+              <td [ngClass]="getColorEstadoPA(item.pasysmedida, item.padiamedida)">{{ item.pasysmedida }}</td>
+              <td [ngClass]="getColorEstadoPA(item.pasysmedida, item.padiamedida)">{{ item.padiamedida }}</td>
+              <td>{{ item.pafcmedida }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+
+      <!-- PESO -->
+      <ng-container *ngSwitchCase="'PESO'">
+        <table class="table table-hover text-center align-middle table-striped mb-0">
+          <thead class="table-primary">
+            <tr>
+              <th>Fecha</th>
+              <th>Periodo</th>
+              <th>Peso (kg)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of niveles.peso">
+              <td>{{ getFechaFormateada(item.pesofechahora) }}</td>
+              <td>{{ obtenerNombrePeriodo(item.pesoperiodo) }}</td>
+              <td [ngClass]="getColorEstadoPeso(item.pesomedida)">{{ item.pesomedida }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+
+      <!-- SIGNOS VITALES -->
+      <ng-container *ngSwitchCase="'SIGNOS VITALES'">
+        <table class="table table-hover text-center align-middle table-striped mb-0">
+          <thead class="table-primary">
+            <tr>
+              <th>Fecha</th>
+              <th>Periodo</th>
+              <th>SpO2 (%)</th>
+              <th>Pulso</th>
+              <th>Temperatura</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of niveles.covid">
+              <td>{{ getFechaFormateada(item.covidfechahora) }}</td>
+              <td>{{ obtenerNombrePeriodo(item.covidperiodo) }}</td>
+              <td [ngClass]="getColorEstadoCovid(item.covidtempmedida, item.covidspomedida, item.covidpulsomedida)">{{ item.covidspomedida }}</td>
+              <td [ngClass]="getColorEstadoCovid(item.covidtempmedida, item.covidspomedida, item.covidpulsomedida)">{{ item.covidpulsomedida }}</td>
+              <td [ngClass]="getColorEstadoCovid(item.covidtempmedida, item.covidspomedida, item.covidpulsomedida)">{{ item.covidtempmedida }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #sinDatos>
+  <div class="text-center py-5 text-muted fs-5">
+    PACIENTE SIN REGISTROS
+  </div>
+</ng-template>
