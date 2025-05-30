@@ -87,6 +87,21 @@ export class ConsultaService {
     );
   }
 
+  getResumenDashboard(idGroup: number, idMedico: string, idUsuario: number, startDate: number, endDate: number): Observable<any> {
+    const params = new HttpParams()
+      .set('idGroup', idGroup.toString())
+      .set('idMedico', idMedico)
+      .set('idUsuario', idUsuario.toString())
+      .set('startDate', startDate.toString())
+      .set('endDate', endDate.toString())
+      .set('page', '0')
+      .set('size', '1000')
+      .set('orderColumn', 'fechaConsulta')
+      .set('orderType', 'desc');
+  
+    return this.http.get<any>(`${this.baseUrl}/findAll`, { params });
+  }
+
   confirmarConsulta(idConsulta: number, estado: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/confirmar/${idConsulta}`, estado).pipe(
       catchError(err => throwError(() => err))

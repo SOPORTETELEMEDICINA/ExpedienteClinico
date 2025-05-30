@@ -199,71 +199,90 @@ export class DataService {
       showAsTab: false,
       separateRoute: false,
       menu: [
+        // {
+        //   menuValue: 'Home',
+        //   hasSubRoute: false,
+        //   showSubRoute: false,
+        //   base: '',
+        //   route: '', // <-- esto en blanco
+        //   img: 'assets/img/icons/menu-icon-01.svg',
+        //   subMenus: [
+        //     {
+        //       menuValue: 'Admin Dashboard',
+        //       route: routes.adminDashboard,
+        //       base: routes.adminDashboard,
+        //     },
+        //     {
+        //       menuValue: 'Doctor Dashboard',
+        //       route: routes.doctorDashboard,
+        //       base: routes.doctorDashboard,
+        //     },
+        //     {
+        //       menuValue: 'Patient Dashboard',
+        //       route: routes.patientDashboard,
+        //       base: routes.patientDashboard,
+        //     },
+        //   ],
+        // },
         {
-          menuValue: 'Dashboard',
-          hasSubRoute: true,
+          menuValue: 'HOME',
+          hasSubRoute: false,
           showSubRoute: false,
-          base: '',
-          route: '', // <-- esto en blanco
+          base: routes.home,
+          route: routes.home,
           img: 'assets/img/icons/menu-icon-01.svg',
-          subMenus: [
-            {
-              menuValue: 'Admin Dashboard',
-              route: routes.adminDashboard,
-              base: routes.adminDashboard,
-            },
-            {
-              menuValue: 'Doctor Dashboard',
-              route: routes.doctorDashboard,
-              base: routes.doctorDashboard,
-            },
-            {
-              menuValue: 'Patient Dashboard',
-              route: routes.patientDashboard,
-              base: routes.patientDashboard,
-            },
-          ],
+          subMenus: []
         },
         {
-          menuValue: 'Médicos',
+          menuValue: 'MEDICOS',
           hasSubRoute: true,
           showSubRoute: false,
           base: 'medicos',
           img: 'assets/img/icons/menu-icon-02.svg', // Usa el ícono que prefieras
           subMenus: [
             {
-              menuValue: 'Listado de Médicos',
+              menuValue: 'LISTADO DE MEDICOS',
               route: routes.doctorsList,  // Asegúrate que esta propiedad en routes.ts esté bien
               base: routes.doctorsList,
             },
             {
-              menuValue: 'Agregar Médico',
+              menuValue: 'AGREGAR MEDICO',
               route: routes.addDoctor,
               base: routes.addDoctor,
             }
           ],
         },
         {
-          menuValue: 'Pacientes',
+          menuValue: 'PACIENTES',
           hasSubRoute: true,
           showSubRoute: false,
           base: 'pacientes',
           img: 'assets/img/icons/menu-icon-03.svg',
           subMenus: [
             {
-              menuValue: 'Listado de Pacientes',
+              menuValue: 'LISTADO DE PACIENTES',
               route: routes.patientsList,
               base: routes.patientsList,
             },
             {
-              menuValue: 'Agregar Paciente',
+              menuValue: 'LISTADO DE PACIENTES NO ATENDIDOS',
+              route: routes.patientsListNoA,
+              base: routes.patientsListNoA,
+            },
+            {
+              menuValue: 'LISTADO DE PACIENTES COMPARTIDOS',
+              route: routes.patientsListCompartidos,
+              base: routes.patientsListCompartidos,
+            },
+            {
+              menuValue: 'AGREGAR PACIENTE',
               route: routes.addPatient,
               base: routes.addPatient,
             }
           ],
         },
         {
-          menuValue: 'Consultas',
+          menuValue: 'CONSULTAS',
           hasSubRoute: false,
           showSubRoute: false,
           base: 'consultas',
@@ -272,6 +291,36 @@ export class DataService {
           faIcon: true,
           subMenus: []
         },
+        {
+          menuValue: 'AGENDA',
+          hasSubRoute: false,
+          showSubRoute: false,
+          base: 'agenda',
+          route: '/agenda',
+          img: 'assets/img/icons/menu-icon-04.svg',
+          subMenus: []
+        },
+        {
+          menuValue: 'FORMATOS',
+          hasSubRoute: false,
+          showSubRoute: false,
+          base: 'formatos',
+          route: '/formatos',
+          img: 'assets/img/icons/document-icon.svg',
+          subMenus: []
+        },
+        // {
+        //   menuValue: 'BITACORA',
+        //   hasSubRoute: false,
+        //   showSubRoute: false,
+        //   base: '',
+        //   route: '', // ← no se usa route porque es externo
+        //   external: true,
+        //   dynamicHref: true, // ← lo usaremos para controlarlo en la vista
+        //   icon: 'fa-book',   // ← o cambia a otro ícono
+        //   faIcon: true,
+        //   subMenus: []
+        // },
         // {
         //   menuValue: 'Doctors',
         //   hasSubRoute: true,

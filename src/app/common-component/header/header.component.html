@@ -1,330 +1,92 @@
-<div class="header">
-    <div class="header-left">
-        <a [routerLink]="routes.adminDashboard" class="logo">
-            <img src="assets/img/logo.png" width="35" height="35" alt=""> <span>Pre Clinic</span>
-        </a>
+<div class="header d-flex align-items-center border-bottom shadow-sm px-3 py-2 flex-wrap flex-md-nowrap" style="height: 70px;">
+    <!-- LOGO + TOGGLE -->
+    <div class="d-flex align-items-center pe-2" style="width: 30%;">
+      <img [src]="logoBase64" alt="Logo Grupo" class="logo-img me-2" />
+      <a class="d-none d-md-block" (click)="toggleSideBar()" href="javascript:void(0);">
+        <img src="assets/img/icons/bar-icon.svg" alt="">
+      </a>
+      <a class="d-md-none" (click)="toggleMobileSideBar()" href="javascript:void(0);">
+        <img src="assets/img/icons/bar-icon.svg" alt="">
+      </a>
     </div>
-    <a (click)="toggleSideBar()" id="toggle_btn" href="javascript:void(0);"><img src="assets/img/icons/bar-icon.svg"  alt=""></a>
-    <a (click)="toggleMobileSideBar()" (keyup.enter)="toggleMobileSideBar()" id="mobile_btn" class="mobile_btn float-start" tabindex="0"  ><img src="assets/img/icons/bar-icon.svg"  alt=""></a>
-    <div class="top-nav-search mob-view">
-        <form>
-            <input type="text" class="form-control" placeholder="Search here">
-            <a class="btn" ><img src="assets/img/icons/search-normal.svg" alt=""></a>
-        </form>
+  
+    <!-- NUEVA CONSULTA -->
+
+
+    <!-- NUEVA CONSULTA - Desktop -->
+<div class="d-none d-md-flex align-items-center justify-content-center" style="width: 25%;">
+    <div class="dropdown">
+      <button class="btn btn-link text-decoration-none p-0 text-info d-flex align-items-center gap-1 fs-6"
+              data-bs-toggle="dropdown">
+        <i class="fa fa-plus fs-5"></i>
+        <span class="fw-bold">NUEVA CONSULTA</span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" (click)="irConsultaNueva()">CONSULTA NUEVA</a></li>
+        <li><a class="dropdown-item" (click)="irConsultaRapida()">CONSULTA RÁPIDA</a></li>
+      </ul>
     </div>
-    <ul class="nav user-menu float-end">
-        <li class="nav-item dropdown d-none d-sm-block">
-            <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"><img src="assets/img/icons/note-icon-02.svg" alt=""><span class="pulse"></span> </a>
-            <div class="dropdown-menu notifications">
-                <div class="topnav-dropdown-header">
-                    <span>Notifications</span>
-                </div>
-                <div class="drop-scroll">
-                    <ul class="notification-list">
-                        <li class="notification-message">
-                            <a [routerLink]="routes.activities">
-                                <div class="media">
-                                    <span class="avatar">
-                                        <img alt="John Doe" src="assets/img/user.jpg" class="img-fluid">
-                                    </span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
-                                        <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a [routerLink]="routes.activities">
-                                <div class="media">
-                                    <span class="avatar">V</span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Tarah Shropshire</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
-                                        <p class="noti-time"><span class="notification-time">6 mins ago</span></p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a [routerLink]="routes.activities">
-                                <div class="media">
-                                    <span class="avatar">L</span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Misty Tison</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
-                                        <p class="noti-time"><span class="notification-time">8 mins ago</span></p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a [routerLink]="routes.activities">
-                                <div class="media">
-                                    <span class="avatar">G</span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Rolland Webber</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
-                                        <p class="noti-time"><span class="notification-time">12 mins ago</span></p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="notification-message">
-                            <a [routerLink]="routes.activities">
-                                <div class="media">
-                                    <span class="avatar">V</span>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added new task <span class="noti-title">Private chat module</span></p>
-                                        <p class="noti-time"><span class="notification-time">2 days ago</span></p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="topnav-dropdown-footer">
-                    <a [routerLink]="routes.activities">View all Notifications</a>
-                </div>
-            </div>
-        </li>
-        <li class="nav-item dropdown d-none d-sm-block">
-            <a (click)="openBoxFunc()"  (keyup.enter)="openBoxFunc()" id="open_msg_box" class="hasnotifications nav-link" tabindex="0"><img src="assets/img/icons/note-icon-01.svg" alt=""><span class="pulse"></span> </a>
-        </li>
-        <li class="nav-item dropdown has-arrow user-profile-list">
-            <a href="javascript:void(0);" class="dropdown-toggle nav-link user-link" data-bs-toggle="dropdown">
-                <div class="user-names">
-                    <h5>Liam Michael </h5>
-                    <span>Admin</span>
-                </div>
-                <span class="user-img">
-                    <img  src="assets/img/user-06.jpg"  alt="Admin">
-                </span>
+  </div>
+  
+  <!-- NUEVA CONSULTA - Mobile -->
+  <div class="d-flex d-md-none align-items-center justify-content-center me-2">
+    <div class="dropdown">
+      <button class="btn btn-info rounded-circle text-white p-2 align-items-center justify-content-center" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-edit"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" (click)="irConsultaNueva()">CONSULTA NUEVA</a></li>
+        <li><a class="dropdown-item" (click)="irConsultaRapida()">CONSULTA RÁPIDA</a></li>
+      </ul>
+    </div>
+  </div>
+
+<!-- 
+    <div class="d-flex align-items-center justify-content-center" style="width: 15%;">
+      <div class="dropdown">
+        <button class="btn btn-info d-flex align-items-center justify-content-center rounded-circle"
+                style="width: 34px; height: 34px;" data-bs-toggle="dropdown">
+          <i class="fa fa-edit text-white"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="irConsultaNueva()">CONSULTA NUEVA</a></li>
+          <li><a class="dropdown-item" (click)="irConsultaRapida()">CONSULTA RÁPIDA</a></li>
+        </ul>
+      </div>
+    </div> -->
+  
+    <!-- USUARIO -->
+    <div class="d-flex align-items-center justify-content-center text-end" style="width: 45%;">
+      <div class="dropdown">
+        <button class="btn btn-link text-decoration-none text-dark p-0" data-bs-toggle="dropdown">
+          <div class="d-flex flex-column align-items-end">
+            <div class="fw-bold text-uppercase username-text">{{ nombreUsuario }}</div>
+            <div class="small text-muted description-text">{{ descripcionUsuario }}</div>
+          </div>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li *ngFor="let grupo of listaGrupos">
+            <a class="dropdown-item d-flex align-items-center gap-2" (click)="seleccionarGrupo(grupo)">
+              <img [src]="grupo.logoBase64" alt="Grupo" class="group-logo-img" />
+              {{ grupo.nombre }}
             </a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" [routerLink]="routes.profile">My Profile</a>
-                <a class="dropdown-item" [routerLink]="routes.editProfile">Edit Profile</a>
-                <a class="dropdown-item" [routerLink]="routes.settings">Settings</a>
-                <a class="dropdown-item" [routerLink]="routes.login">Logout</a>
-            </div>
-        </li>
-        <li class="nav-item ">
-            <a [routerLink]="routes.settings"  class="hasnotifications nav-link"><img src="assets/img/icons/setting-icon-01.svg" alt=""> </a>
-        </li>
-    </ul>
-    <div class="dropdown mobile-user-menu float-end">
-        <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-        <div class="dropdown-menu dropdown-menu-end">
-            <a class="dropdown-item" [routerLink]="routes.profile">My Profile</a>
-            <a class="dropdown-item" [routerLink]="routes.editProfile">Edit Profile</a>
-            <a class="dropdown-item" [routerLink]="routes.settings">Settings</a>
-            <a class="dropdown-item" [routerLink]="routes.login">Logout</a>
-        </div>
+          </li>
+        </ul>
+      </div>
     </div>
-</div>
-<div class="notification-box">
-    <div class="msg-sidebar notifications msg-noti">
-        <div class="topnav-dropdown-header">
-            <span>Messages</span>
-        </div>
-        <div class="drop-scroll msg-list-scroll" id="msg_list">
-            <ul class="list-box">
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">R</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author">Richard Miles </span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item new-message">
-                            <div class="list-left">
-                                <span class="avatar">J</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author">John Doe</span>
-                                <span class="message-time">1 Aug</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">T</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author"> Tarah Shropshire </span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">M</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author">Mike Litorus</span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">C</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author"> Catherine Manseau </span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">D</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author"> Domenic Houston </span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">B</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author"> Buster Wigton </span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">R</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author"> Rolland Webber </span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">C</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author"> Claire Mapes </span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">M</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author">Melita Faucher</span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">J</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author">Jeffery Lalor</span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">L</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author">Loren Gatlin</span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a [routerLink]="routes.chat">
-                        <div class="list-item">
-                            <div class="list-left">
-                                <span class="avatar">T</span>
-                            </div>
-                            <div class="list-body">
-                                <span class="message-author">Tarah Shropshire</span>
-                                <span class="message-time">12:28 AM</span>
-                                <div class="clearfix"></div>
-                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="topnav-dropdown-footer">
-            <a [routerLink]="routes.chat">See all messages</a>
-        </div>
+  
+    <!-- ENGRANE -->
+    <div class="d-flex align-items-center justify-content-end" style="width: 10%;">
+      <div class="dropdown">
+        <button class="btn btn-link text-decoration-none p-0 text-info fs-4" data-bs-toggle="dropdown">
+            <i class="fa fa-cog"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" (click)="irAltaPaciente()">ALTA DE PACIENTE</a></li>
+          <li><a class="dropdown-item" (click)="irCambiarPassword()">CAMBIAR CONTRASEÑA</a></li>
+          <li><a class="dropdown-item" (click)="logout()">CERRAR SESIÓN</a></li>
+        </ul>
+      </div>
     </div>
-</div>
+  </div>
+  

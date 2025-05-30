@@ -66,7 +66,7 @@
   
           <div class="row mb-3">
             <div class="col-md-6">
-              <div class="label">Religión:</div>
+              <div class="label">ReligiOn:</div>
               <div class="value">{{ patientDetails?.religion || '-' }}</div>
             </div>
             <div class="col-md-6">
@@ -80,11 +80,11 @@
   </div>
   
 
-<!-- Datos clínicos -->
+<!-- Datos clInicos -->
 <div class="accordion-item mb-3">
   <h2 class="accordion-header">
     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#datosClinicos">
-      <i class="fas fa-notes-medical me-2"></i> DATOS CLÍNICOS
+      <i class="fas fa-notes-medical me-2"></i> DATOS CLINICOS
     </button>
   </h2>
   <div id="datosClinicos" class="accordion-collapse collapse">
@@ -107,14 +107,14 @@
             <div class="value">{{ patientDetails?.afiliacion || '-' }}</div>
           </div>
           <div class="col-md-6">
-            <div class="label">No. Afiliación:</div>
+            <div class="label">No. AfiliaciOn:</div>
             <div class="value">{{ patientDetails?.numeroAfiliacion || '-' }}</div>
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-6">
-            <div class="label">Padecimiento Crónico:</div>
+            <div class="label">Padecimiento CrOnico:</div>
             <div class="value">{{ patientDetails?.padecimientoCronico || 'NA' }}</div>
           </div>
           <div class="col-md-6">
@@ -151,14 +151,14 @@
             <div class="value">{{ patientDetails?.datosAdicionalesView?.escolaridad || '-' }}</div>
           </div>
           <div class="col-md-6">
-            <div class="label">Ocupación Actual:</div>
+            <div class="label">OcupaciOn Actual:</div>
             <div class="value">{{ patientDetails?.datosAdicionalesView?.ocupacion || '-' }}</div>
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-6">
-            <div class="label">Ocupación Anterior:</div>
+            <div class="label">OcupaciOn Anterior:</div>
             <div class="value">{{ patientDetails?.datosAdicionalesView?.ocupacionAnterior || '-' }}</div>
           </div>
         </div>
@@ -200,7 +200,7 @@
                   <td>{{ contacto?.telefonoCelular || '-' }}</td>
                   <td>{{ contacto?.telefonoOficina || '-' }}</td>
                   <td>
-                    <span *ngIf="contacto?.cuentaConLlaves; else noLlaves">Sí</span>
+                    <span *ngIf="contacto?.cuentaConLlaves; else noLlaves">SI</span>
                     <ng-template #noLlaves>No</ng-template>
                   </td>
                 </tr>

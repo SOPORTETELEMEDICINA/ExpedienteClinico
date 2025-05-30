@@ -4,7 +4,7 @@
          [ngClass]="{active: tipoSeleccionado === tipo, 'bg-primary text-white': tipoSeleccionado === tipo, 'text-dark': tipoSeleccionado !== tipo}"
          (click)="seleccionarTipo(tipo)"
          style="cursor: pointer; border-radius: 0;">
-        {{ tipo | titlecase }}
+        {{ tipo | uppercase  }}
       </a>
     </li>
   </ul>
@@ -26,8 +26,8 @@
       <thead style="background-color: #2c3eaa; color: white;">
         <tr>
           <th style="width: 40px;"><i class="bi bi-check-square"></i></th>
-          <th class="text-start">Periodo</th>
-          <th>Hora</th>
+          <th class="text-start">PERIODO</th>
+          <th>HORA</th>
           <th *ngFor="let dia of dias">{{ dia }}</th>
         </tr>
       </thead>

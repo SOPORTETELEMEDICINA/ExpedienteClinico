@@ -1,0 +1,148 @@
+<div class="page-wrapper">
+    <div class="content">
+  
+      <!-- Breadcrumb -->
+      <div class="page-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a [routerLink]="['/pacientes']">PACIENTES</a></li>
+              <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+              <li class="breadcrumb-item active">LISTA DE PACIENTES COMPARTIDOS</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Contenido -->
+      <div class="row">
+        <div class="col-sm-12">
+  
+          <div class="card card-table show-entire">
+            <div class="card-body">
+  
+              <!-- Header de la tabla -->
+              <div class="page-table-header mb-2">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <div class="doctor-table-blk">
+                      <h3>LISTA DE PACIENTES</h3>
+                      <div class="doctor-search-blk">
+                        <div class="top-nav-search table-search-blk">
+                          <input #txtBuscar type="text" class="form-control" placeholder="BUSCAR PACIENTE..." (keyup)="buscar()">
+                          <a class="btn" (click)="buscar()">
+                            <img src="assets/img/icons/search-normal.svg" alt="Buscar">
+                          </a>
+                        </div>
+                        <div class="add-group">
+                          <a [routerLink]="['/pacientes/agregar']" class="btn btn-primary add-pluss ms-2">
+                            <img src="assets/img/icons/plus.svg" alt="Agregar">
+                          </a>
+                          <a class="btn btn-primary doctor-refresh ms-2" (click)="recargarPacientes()">
+                            <img src="assets/img/icons/re-fresh.svg" alt="Refrescar">
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+
+              
+              <!-- Tabla -->
+              <div class="table-responsive">
+                <table class="table border-0 custom-table comman-table datatable mb-0">
+                  <thead>
+                    <tr>
+                      <th (click)="ordenarPor('nombre')" class="cursor-pointer">
+                        NOMBRE
+                        <i class="bi ms-1" [ngClass]="{
+                          'bi-caret-up-fill': columnaOrden === 'nombre' && ordenAscendente,
+                          'bi-caret-down-fill': columnaOrden === 'nombre' && !ordenAscendente,
+                          'opacity-25': columnaOrden !== 'nombre'
+                        }"></i>
+                      </th>
+                      <th (click)="ordenarPor('fechaCreacion')" class="cursor-pointer">
+                        FECHA REGISTRO
+                        <i class="bi ms-1" [ngClass]="{
+                          'bi-caret-up-fill': columnaOrden === 'fechaCreacion' && ordenAscendente,
+                          'bi-caret-down-fill': columnaOrden === 'fechaCreacion' && !ordenAscendente,
+                          'opacity-25': columnaOrden !== 'fechaCreacion'
+                        }"></i>
+                      </th>
+                      <th>GRUPO</th>
+                      <th>USUARIO</th>
+                      <th class="text-end">ACCIONES</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr *ngIf="isLoading">
+                      <td colspan="100%" class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                          <span class="visually-hidden">Cargando...</span>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr *ngFor="let paciente of pacientes">
+                      <td>{{ paciente.nombre }}</td>
+                      <td>{{ paciente.fechaCreacion | date: 'dd MMM yyyy' }}</td>
+                      <td>{{ paciente.idGroup }}</td>
+                      <td>{{ paciente.userName }}</td>
+                      <td class="text-end">
+                        <a [routerLink]="['/pacientes/editar', paciente.idPaciente]" class="btn btn-sm btn-outline-success" >
+                          <i class="fas fa-pen"></i> EDITAR
+                        </a>
+                        <!-- <button class="btn btn-sm btn-outline-primary" (click)="verDetalle(paciente.idPaciente)">Ver</button> -->
+                      </td>
+                    </tr>
+                    <tr *ngIf="pacientes.length === 0 && !isLoading">
+                      <td colspan="5" class="text-center text-muted py-4">NO HAY PACIENTES ENCONTRADOS.</td>
+                    </tr>
+                  </tbody>
+                </table>
+  
+                <!-- Footer tabla -->
+                <div class="table_footer mt-4" *ngIf="totalRegistros > 0">
+                  <div class="row align-items-center">
+                    <div class="col-sm-12 col-md-6">
+                      <div class="dataTables_info ps-2">
+                        MOSTRANDO {{ fin }} DE {{ totalRegistros }} REGISTROS
+                      </div>
+                    </div>
+  
+                    <div class="col-sm-12 col-md-6">
+                      <div class="pagination_section d-flex justify-content-end pe-2">
+                        <ul class="pagination pagination-sm mb-0">
+                          <li class="page-item" [class.disabled]="paginaActual === 1">
+                            <a class="page-link" (click)="cambiarPagina(paginaActual - 1)">ANTERIOR</a>
+                          </li>
+                          <ng-container *ngFor="let p of paginasReducidas">
+                            <li *ngIf="p !== '...'" class="page-item" [class.active]="p === paginaActual">
+                              <a class="page-link" (click)="cambiarPagina(p)">{{ p }}</a>
+                            </li>
+                            <li *ngIf="p === '...'" class="page-item disabled">
+                              <span class="page-link">...</span>
+                            </li>
+                          </ng-container>
+                          <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
+                            <a class="page-link" (click)="cambiarPagina(paginaActual + 1)">SIGUIENTE</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+              </div> <!-- /table-responsive -->
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  

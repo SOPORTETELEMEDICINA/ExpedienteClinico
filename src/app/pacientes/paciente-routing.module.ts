@@ -10,14 +10,21 @@ import { ConsultaActualComponent } from './detalle-paciente/consulta-actual/cons
 import { TelemetriaComponent } from './detalle-paciente/telemetria/telemetria.component';
 import { CuestionariosComponent } from './detalle-paciente/cuestionarios/cuestionarios.component';
 import { DetalleConsultaComponent } from '../consulta/detalle-consulta/detalle-consulta.component';
+import { AuthGuard } from '../shared/auth/auth.guard';
+import { HistoriaClinicaComponent } from './detalle-paciente/historia-clinica/historia-clinica.component';
+import { ListaPacientesNoAtendidosComponent } from './lista-pacientes-no-atendidos/lista-pacientes-no-atendidos.component';
+import { ListaPacientesCompartidosComponent } from './lista-pacientes-compartidos/lista-pacientes-compartidos.component';
 
 const routes: Routes = [
   {
     path: '',
     component: CoreComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'lista', pathMatch: 'full' },
       { path: 'lista', component: ListaPacientesComponent },
+      { path: 'lista-no-atendidos', component: ListaPacientesNoAtendidosComponent },
+      { path: 'lista-compartidos', component: ListaPacientesCompartidosComponent },
       { path: 'agregar', component: CrearPacienteComponent },
       { path: 'editar/:id', component: CrearPacienteComponent },
       {
@@ -31,6 +38,7 @@ const routes: Routes = [
           //{ path: 'cuestionarios', loadComponent: () => import('./detalle-paciente/cuestionarios/cuestionarios.component').then(m => m.CuestionariosComponent) },
     
           {path: 'perfil',component: PerfilComponent},
+          {path: 'historia-clinica',component: HistoriaClinicaComponent},
           {path: 'curso-clinico',component: CursoClinicoComponent},
           {path: 'consulta-actual',component: DetalleConsultaComponent },
           {path: 'telemetria',component: TelemetriaComponent},

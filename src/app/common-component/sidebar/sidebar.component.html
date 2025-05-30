@@ -3,9 +3,9 @@
     <div id="sidebar-menu" class="sidebar-menu">
       <ul>
         <ng-container *ngFor="let mainTittle of sidebarData">
-          <li class="menu-title">
+          <!-- <li class="menu-title">
             <span>{{ mainTittle.tittle | titlecase }}</span>
-          </li>
+          </li> -->
           <ng-container *ngFor="let menu of mainTittle.menu">
             <li *ngIf="menu.hasSubRoute === false">
               <a [class.active]="base === menu.base" [routerLink]="menu.route"><span class="menu-side"><i class="fa"
@@ -29,13 +29,33 @@
                     <a [routerLink]="subMenus.route" [class.active]="currentUrl === subMenus.base">
                       {{ subMenus.menuValue | titlecase }}
                     </a>
+
+
                   </li>
                 </ng-container>
+               
+                
 
               </ul>
             </li>
           </ng-container>
         </ng-container>
+
+        <li *ngFor="let bitacora of bitacorasExternas">
+          <a [href]="bitacora.url" target="popup">
+            <i class="fa fa-book-open"></i>
+            <span class="menu-nombre">{{ bitacora.label }}</span>
+          </a>
+        </li>
+
+        <!-- <li *ngIf="showBitacora">
+          <a [href]="bitacoraUrl" target="_blank">
+            <span class="menu-side">
+              <i class="fa fa-book-open"></i>
+            </span>
+            <span>BITACORA MEDICA</span>
+          </a>
+        </li> -->
         <!-- <li class="submenu">
           <a [ngClass]="{ subdrop: multilevel[0] }" (click)="multilevel[0] = !multilevel[0]" href="javascript:void(0);"><i class="fa fa-share-alt"></i> <span>Multi Level</span> <span
               class="menu-arrow"></span></a>

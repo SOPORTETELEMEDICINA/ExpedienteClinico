@@ -1,1 +1,88 @@
-<p>cuestionarios works!</p>
+<div class="card shadow p-3">
+
+    <!-- ENCABEZADO DE CUESTIONARIOS -->
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <ng-container *ngFor="let quiz of listaCuestionarios">
+        <button
+          class="btn"
+          [class.btn-primary]="quiz.idCuestionario === cuestionarioSeleccionado"
+          [class.btn-outline-primary]="quiz.idCuestionario !== cuestionarioSeleccionado"
+          (click)="cargarCuestionario(quiz.idCuestionario)">
+          {{ quiz.nombre | uppercase }}
+        </button>
+      </ng-container>
+    </div>
+  
+    <!-- PREGUNTAS ACTUALES -->
+    <div *ngIf="preguntasActuales?.length > 0" class="mb-4">
+      <h5 class="text-primary fw-bold mb-3">CUESTIONARIO ACTUAL</h5>
+      <div *ngFor="let p of preguntasActuales; let i = index" class="mb-3 border-bottom pb-2">
+        <label class="fw-semibold">{{ i + 1 }}. {{ p.pregunta | uppercase }}</label>
+  
+        <ng-container [ngSwitch]="p.tipoPregunta">
+          <!-- Pregunta Abierta -->
+          <textarea *ngSwitchCase="1"
+                    class="form-control mt-2"
+                    rows="2"
+                    [(ngModel)]="p.respuesta"
+                    placeholder="ESCRIBA AQUÍ..."></textarea>
+  
+          <!-- Pregunta SI/NO -->
+          <div *ngSwitchCase="2" class="d-flex gap-3 mt-2">
+            <label class="form-check-label">
+              <input type="radio"
+                     class="form-check-input"
+                     [(ngModel)]="p.respuesta"
+                     [value]="'SI'"
+                     name="pregunta-{{i}}">
+              SI
+            </label>
+            <label class="form-check-label">
+              <input type="radio"
+                     class="form-check-input"
+                     [(ngModel)]="p.respuesta"
+                     [value]="'NO'"
+                     name="pregunta-{{i}}">
+              NO
+            </label>
+          </div>
+        </ng-container>
+      </div>
+  
+      <button class="btn btn-success mt-3" (click)="guardarCuestionario()">
+        GUARDAR CUESTIONARIO
+      </button>
+    </div>
+  
+    <!-- HISTORIAL DE RESPUESTAS -->
+    <div *ngIf="respuestasHistorial?.length > 0">
+      <h5 class="text-primary fw-bold mb-3">RESULTADOS DEL CUESTIONARIO</h5>
+  
+      <div *ngFor="let r of respuestasHistorial; let i = index" class="mb-3">
+        <div class="bg-light p-2 d-flex justify-content-between align-items-center rounded cursor-pointer"
+             (click)="r.active = !r.active">
+          <div>
+            <b>FECHA DE CREACIÓN:</b> {{ r.createdDate | date:'medium' }}
+            <ng-container *ngIf="obtenerNombrePorId(cuestionarioSeleccionado) === 'DETECCION DE DENGUE'">
+              <span class="ms-3"><b>Total:</b> {{ totalesSi[i] }}</span>
+              <span class="ms-2">
+                <ng-container *ngIf="totalesSi[i] <= 6">DENGUE SIN SIGNOS DE ALARMA</ng-container>
+                <ng-container *ngIf="totalesSi[i] > 6 && totalesSi[i] <= 10">DENGUE CON SIGNOS DE ALARMA</ng-container>
+                <ng-container *ngIf="totalesSi[i] > 10">DENGUE GRAVE</ng-container>
+              </span>
+            </ng-container>
+          </div>
+          <i class="fa" [ngClass]="r.active ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+        </div>
+  
+        <div *ngIf="r.active" class="mt-2 border-start ps-3">
+          <div *ngFor="let d of r.json" class="mb-1">
+            <span class="fw-semibold text-dark">{{ d.Pregunta }}</span>:
+            <span class="text-uppercase text-danger">{{ d.Respuesta || 'NO' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  

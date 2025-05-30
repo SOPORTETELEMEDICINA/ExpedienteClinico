@@ -1,54 +1,94 @@
 <div class="telemetria-header mb-4">
-  <div class="d-flex align-items-center gap-3 flex-wrap">
+  <!-- FILA 1: Tipo, Visualización, Tipo de gráfica -->
+  <div class="d-flex flex-wrap align-items-end gap-4 mb-3">
+    
+    <!-- TIPO -->
     <div class="form-group mb-0">
-      <label class="form-label me-2">Tipo:</label>
-      <select class="form-select" [(ngModel)]="tipo" (change)="filtrarNiveles()">
-        <option value="GLUCOSA">GLUCOSA</option>
-        <option value="PRESION ARTERIAL">PRESION ARTERIAL</option>
-        <option value="PESO">PESO</option>
-        <option value="SIGNOS VITALES">SIGNOS VITALES</option>
-      </select>
+      <label class="form-label d-block">Tipo:</label>
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-outline-primary"
+          [class.active]="tipo === 'GLUCOSA'" (click)="cambiarTipo('GLUCOSA')">GLUCOSA</button>
+        <button type="button" class="btn btn-outline-primary"
+          [class.active]="tipo === 'PRESION ARTERIAL'" (click)="cambiarTipo('PRESION ARTERIAL')">PRESIÓN ARTERIAL</button>
+        <button type="button" class="btn btn-outline-primary"
+          [class.active]="tipo === 'PESO'" (click)="cambiarTipo('PESO')">PESO</button>
+        <button type="button" class="btn btn-outline-primary"
+          [class.active]="tipo === 'SIGNOS VITALES'" (click)="cambiarTipo('SIGNOS VITALES')">SIGNOS VITALES</button>
+      </div>
     </div>
 
+    <!-- VISUALIZACIÓN -->
     <div class="form-group mb-0">
-      <label class="form-label me-2">Visualización:</label>
-      <select class="form-select" [(ngModel)]="selectedModeData">
-        <option value="lista">Lista</option>
-        <option value="grafica">Gráfica</option>
-        <option value="ambos">Ambos</option>
-      </select>
+      <label class="form-label d-block">Visualización:</label>
+      <div class="btn-group rounded-pill shadow-sm" role="group">
+        <button class="btn btn-outline-secondary"
+          [class.active]="selectedModeData === 'lista'"
+          (click)="selectedModeData = 'lista'">
+          <i class="fas fa-list me-1"></i> Lista
+        </button>
+        <button class="btn btn-outline-secondary"
+          [class.active]="selectedModeData === 'grafica'"
+          (click)="selectedModeData = 'grafica'">
+          <i class="fas fa-chart-line me-1"></i> Gráfica
+        </button>
+        <button class="btn btn-outline-secondary"
+          [class.active]="selectedModeData === 'ambos'"
+          (click)="selectedModeData = 'ambos'">
+          <i class="fas fa-columns me-1"></i> Ambos
+        </button>
+      </div>
     </div>
 
+    <!-- TIPO DE GRÁFICA -->
     <div class="form-group mb-0">
-      <label class="form-label me-2">Tipo de gráfica:</label>
-      <select class="form-select" [(ngModel)]="selectedTypeGraph">
-        <option value="line">Lineal</option>
-        <option value="bar">Barras</option>
-      </select>
+      <label class="form-label d-block">Tipo de gráfica:</label>
+      <div class="btn-group rounded-pill shadow-sm" role="group">
+        <button class="btn btn-outline-secondary"
+          [class.active]="selectedTypeGraph === 'line'"
+          (click)="selectedTypeGraph = 'line'">
+          <i class="fas fa-chart-line me-1"></i> Lineal
+        </button>
+        <button class="btn btn-outline-secondary"
+          [class.active]="selectedTypeGraph === 'bar'"
+          (click)="selectedTypeGraph = 'bar'">
+          <i class="fas fa-chart-bar me-1"></i> Barras
+        </button>
+      </div>
     </div>
+  </div>
 
+  <!-- FILA 2: Periodo + Fechas + Botones -->
+  <div class="d-flex flex-wrap align-items-end gap-3">
+    
+    <!-- PERIODO -->
     <div class="form-group mb-0">
-      <label class="form-label me-2">Periodo:</label>
-      <select class="form-select" [(ngModel)]="periodo">
+      <label class="form-label">Periodo:</label>
+      <select class="form-select" [(ngModel)]="periodo" style="min-width: 220px;">
         <option value="0">TODOS</option>
         <option *ngFor="let p of periodos" [value]="p.id">{{ p.nombre }}</option>
       </select>
     </div>
 
+    <!-- FECHA INICIO -->
     <div class="form-group mb-0">
-      <label class="form-label me-2">Fecha inicio:</label>
+      <label class="form-label">Fecha inicio:</label>
       <input type="date" class="form-control" [(ngModel)]="fecha1">
     </div>
 
+    <!-- FECHA FIN -->
     <div class="form-group mb-0">
-      <label class="form-label me-2">Fecha fin:</label>
+      <label class="form-label">Fecha fin:</label>
       <input type="date" class="form-control" [(ngModel)]="fecha2">
     </div>
 
+    <!-- BOTÓN FILTRAR -->
     <div class="form-group mb-0">
-      <button class="btn btn-primary mt-4" (click)="filtrarNiveles()">Filtrar</button>
+      <button class="btn btn-primary mt-4" (click)="filtrarNiveles()">
+        <i class="fas fa-filter me-1"></i> Filtrar
+      </button>
     </div>
 
+    <!-- BOTÓN AGREGAR -->
     <div class="form-group mb-0 ms-auto">
       <button class="btn btn-outline-primary mt-4" (click)="abrirModalNuevoNivel()">
         <i class="fas fa-plus me-2"></i>Agregar Nivel

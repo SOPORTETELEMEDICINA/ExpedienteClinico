@@ -26,42 +26,42 @@ export class AgregarMedicoComponent implements OnInit {
   };
 
   generalFields = [
-    { label: 'Nombre', control: 'nombre', required: true },
-    { label: 'Apellido Paterno', control: 'apellidoPaterno', required: true },
-    { label: 'Apellido Materno', control: 'apellidoMaterno' },
+    { label: 'NOMBRE', control: 'nombre', required: true },
+    { label: 'APELLIDO PATERNO', control: 'apellidoPaterno', required: true },
+    { label: 'APELLIDO MATERNO', control: 'apellidoMaterno' },
     { label: 'CURP', control: 'curp' },
     { label: 'RFC', control: 'rfc' },
-    { label: 'Teléfono Fijo', control: 'telefonoFijo' },
-    { label: 'Teléfono Móvil', control: 'telefonoMovil' },
-    { label: 'Email', control: 'email' },
-    { label: 'Usuario', control: 'userName', required: true },
-    { label: 'Contraseña', control: 'password', type: 'password', required: true },
-    { label: 'Lugar de Nacimiento', control: 'lugarNacimiento' },
-    { label: 'Sexo', control: 'sexo' },
-    { label: 'Fecha de Nacimiento', control: 'fechaNacimiento', type: 'date' }
+    { label: 'TELEFONO FIJO', control: 'telefonoFijo' },
+    { label: 'TELEFONO MOVIL', control: 'telefonoMovil' },
+    { label: 'EMAIL', control: 'email' },
+    { label: 'USUARIO', control: 'userName', required: true },
+    { label: 'CONTRASEÑA', control: 'password', type: 'password', required: true },
+    { label: 'LUGAR DE NACIMIENTO', control: 'lugarNacimiento' },
+    { label: 'SEXO', control: 'sexo' },
+    { label: 'FECHA DE NACIMIENTO', control: 'fechaNacimiento', type: 'date' }
   ];
 
   domicilioInputs = [
-    { label: 'Domicilio', key: 'domicilio', required: true },
-    { label: 'Localidad', key: 'localidad' },
-    { label: 'Municipio', key: 'municipio' },
-    { label: 'Estado', key: 'estado' },
-    { label: 'País', key: 'pais' },
-    { label: 'Código Postal', key: 'cp', required: true },
-    { label: 'Teléfono', key: 'telefonoFijo' },
-    { label: 'Horario', key: 'horarioAtencion' }
+    { label: 'DOMICILIO', key: 'domicilio', required: true },
+    { label: 'LOCALIDAD', key: 'localidad' },
+    { label: 'MUNICIPIO', key: 'municipio' },
+    { label: 'ESTADO', key: 'estado' },
+    { label: 'PAIS', key: 'pais' },
+    { label: 'CODIGO POSTAL', key: 'cp', required: true },
+    { label: 'TELEFONO', key: 'telefonoFijo' },
+    { label: 'HORARIO', key: 'horarioAtencion' }
   ];
 
   especialidadInputs = [
-    { label: 'Especialidad', key: 'especialidad' },
-    { label: 'Universidad', key: 'universidad' },
-    { label: 'Cédula', key: 'cedula' }
+    { label: 'ESPECIALIDAD', key: 'especialidad' },
+    { label: 'UNIVERSIDAD', key: 'universidad' },
+    { label: 'CEDULA', key: 'cedula' }
   ];
 
   horarioInputs = [
-    { label: 'Día', key: 'dia' },
-    { label: 'Hora Inicio', key: 'horaInicio' },
-    { label: 'Hora Fin', key: 'horaFin' }
+    { label: 'DIA', key: 'dia' },
+    { label: 'HORA INICIO', key: 'horaInicio' },
+    { label: 'HORA FIN', key: 'horaFin' }
   ];
 
   constructor(private fb: FormBuilder) {}
@@ -141,8 +141,8 @@ export class AgregarMedicoComponent implements OnInit {
   guardarMedico(): void {
     if (this.formularioMedico.valid) {
       const data = this.formularioMedico.value;
-      console.log('Guardando médico:', data);
-      // TODO: llamar a servicio para guardar médico
+      console.log('Guardando mEdico:', data);
+      // TODO: llamar a servicio para guardar mEdico
     } else {
       console.warn('Formulario inválido');
     }
@@ -151,7 +151,7 @@ export class AgregarMedicoComponent implements OnInit {
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      console.log('Archivo seleccionado:', file.name);
+      console.log('ARCHIVO SELECCIONADO:', file.name);
       // TODO: cargar imagen en modelo si aplica
     }
   }

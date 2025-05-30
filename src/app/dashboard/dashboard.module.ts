@@ -5,16 +5,19 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { DoctorDashboardComponent } from './doctor-dashboard/doctor-dashboard.component';
 import { PatientDashboardComponent } from './patient-dashboard/patient-dashboard.component';
+import { HomeComponent } from './home/home.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
     AdminDashboardComponent,
     DoctorDashboardComponent,
-    PatientDashboardComponent
+    PatientDashboardComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,NgApexchartsModule
   ]
 })
 export class DashboardModule { }

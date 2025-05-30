@@ -1,28 +1,25 @@
 <!-- ENCABEZADO COMO LOS ACCORDIONES -->
-<!-- TÍTULO: CURSO CLÍNICO -->
+<!-- TITULO: CURSO CLINICO -->
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4 class="fw-bold d-flex align-items-center gap-2" style="color: #2e37a4;">
         <i class="fa-regular fa-clock"></i>
-        CURSO CLÍNICO
+        CURSO CLINICO
       </h4>
   </div>
   
-  <!-- BARRA: HISTORIA CLÍNICA GENERAL -->
-  <div class="bg-light border-0 rounded shadow-sm px-4 py-3 d-flex justify-content-between align-items-center mb-3 position-relative" style="box-shadow: 0 0 0 1px #e0e0e0;">
-    <!-- Cejita estilo plantilla -->
+  <!-- BARRA: HISTORIA CLINICA GENERAL -->
+  <!-- <div class="bg-light border-0 rounded shadow-sm px-4 py-3 d-flex justify-content-between align-items-center mb-3 position-relative" style="box-shadow: 0 0 0 1px #e0e0e0;">
     <span style="position: absolute; top: 0; bottom: 0; left: 0; width: 5px; background-color: #2e37a4; border-top-left-radius: 0.5rem; border-bottom-left-radius: 0.5rem;"></span>
-    <!-- Título con ícono -->
     <div class="fw-bold text-uppercase d-flex align-items-center gap-2 fs-6" style="color: #2e37a4;">
       <i class="fa-regular fa-folder-open fs-5"></i>
-      Historia Clínica General
+      Historia ClInica General
     </div>
   
-    <!-- Botones -->
     <div class="d-flex align-items-center gap-2">
       <button
         class="btn btn-outline-primary btn-sm d-flex align-items-center justify-content-center"
         (click)="abrirModal()"
-        title="Ver historia clínica"
+        title="Ver historia clInica"
         
       >
         <i class="fa-regular fa-file-lines fs-5"></i>
@@ -31,16 +28,16 @@
       <button
         class="btn btn-outline-secondary btn-sm d-flex align-items-center justify-content-center"
         (click)="imprimirEvento()"
-        title="Imprimir historia clínica"
+        title="Imprimir historia clInica"
 
       >
         <i class="fa-solid fa-print fs-5"></i>
       </button>
     </div>
-  </div>
+  </div> -->
   
   
-<!-- INICIO CURSO CLÍNICO -->
+<!-- INICIO CURSO CLINICO -->
 
 <div class="table-responsive">
     <table class="table table-borderless align-middle">
@@ -52,7 +49,7 @@
           </th>
           <th><i class="fa-solid fa-calendar-days text-success me-2"></i>FECHAS</th>
           <th><i class="fa-solid fa-star text-danger me-2"></i>ESTATUS</th>
-          <th><i class="fa-solid fa-user-doctor text-warning me-2"></i>MÉDICO TRATANTE</th>
+          <th><i class="fa-solid fa-user-doctor text-warning me-2"></i>MEDICO TRATANTE</th>
         </tr>
       </thead>
       <tbody>
@@ -187,9 +184,9 @@
                                   { label: 'Talla', value: consultaSeleccionada.signosVitales.talla + ' cm' },
                                   { label: 'IMC', value: consultaSeleccionada.signosVitales.imc },
                                   { label: 'Tensión Arterial', value: consultaSeleccionada.signosVitales.sistolica + ' / ' + consultaSeleccionada.signosVitales.diastolica },
-                                  { label: 'Frec. Cardíaca', value: consultaSeleccionada.signosVitales.frecCardiaca + ' x min.' },
+                                  { label: 'Frec. CardIaca', value: consultaSeleccionada.signosVitales.frecCardiaca + ' x min.' },
                                   { label: 'Frec. Respiratoria', value: consultaSeleccionada.signosVitales.frecRespiratoria + ' x min.' },
-                                  { label: 'Sat. Oxígeno', value: consultaSeleccionada.signosVitales.saturacionOxigeno + ' %' },
+                                  { label: 'Sat. OxIgeno', value: consultaSeleccionada.signosVitales.saturacionOxigeno + ' %' },
                                   { label: 'EVN', value: consultaSeleccionada.signosVitales.evn }
                                 ]"
                               >
@@ -202,7 +199,7 @@
                           
                             <hr class="my-3" />
                           
-                            <h6 class="fw-bold mb-2">Exploración Física</h6>
+                            <h6 class="fw-bold mb-2">Exploración FIsica</h6>
                             <p class="text-justify small" style="text-align: justify;">
                               {{ consultaSeleccionada.objetivo || 'Sin contenido' }}
                             </p>
@@ -257,7 +254,7 @@
   </div>
   
 
-<!-- FIN CURSO CLÍNICO -->
+<!-- FIN CURSO CLINICO -->
   
 
   
@@ -274,11 +271,11 @@
   <div class="modal-dialog modal-dialog-centered modal-xl custom-modal-size">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title fw-bold" id="modalHCLabel">Historia Clínica</h5>
+        <h5 class="modal-title fw-bold" id="modalHCLabel">Historia ClInica</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
-        <p class="text-muted">Contenido de la historia clínica va aquí.</p>
+        <p class="text-muted">Contenido de la historia clInica va aquI.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>

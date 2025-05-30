@@ -16,7 +16,7 @@ export class HojaSeguimientoComponent implements OnInit {
   tipoSeleccionado: string = 'glucosa';
   tipoAbreviado: string = 'glu';
   periodos: number[] = [];
-  dias: string[] = ['lu', 'ma', 'mi', 'ju', 'vi', 'sa', 'do'];
+  dias: string[] = ['LU', 'MA', 'MI', 'JU', 'VI', 'SA', 'DO'];
   labels: string[] = [];
   paciente2: any; // o crea una clase/modelo si lo prefieres
   indicacion: any = new IndicacionesGlu();
@@ -89,14 +89,14 @@ export class HojaSeguimientoComponent implements OnInit {
   obtenerLabels(tipo: string): string[] {
     switch (tipo.toUpperCase()) {
       case 'PRESION ARTERIAL':
-        return ['ANTES DEL DESAYUNO:', 'DESPUES DEL DESAYUNO:', 'ANTES DE LA COMIDA:', 'DESPUES DE LA COMIDA:', 'ANTES DE CENAR:', 'DESPUES DE LA CENA:', 'ANTES DE DORMIR:'];
+        return ['ANTES DEL DESAYUNO', 'DESPUES DEL DESAYUNO', 'ANTES DE LA COMIDA', 'DESPUES DE LA COMIDA', 'ANTES DE CENAR', 'DESPUES DE LA CENA', 'ANTES DE DORMIR'];
       case 'PESO':
-        return ['MAÑANA:', 'TARDE:', 'NOCHE:'];
+        return ['MAÑANA', 'TARDE', 'NOCHE'];
       case 'SIGNOS VITALES':
-        return ['MAÑANA:', 'TARDE:', 'NOCHE:', 'OTRO:'];
+        return ['MAÑANA', 'TARDE', 'NOCHE', 'OTRO'];
       case 'GLUCOSA':
       default:
-        return ['ANTES DEL DESAYUNO:', 'DESPUES DEL DESAYUNO:', 'ANTES DE LA COMIDA:', 'DESPUES DE LA COMIDA:', 'ANTES DE LA CENA:', 'DESPUES DE LA CENA:', 'ANTES DE DORMIR:', 'A LAS 3:00 A.M.'];
+        return ['ANTES DEL DESAYUNO', 'DESPUES DEL DESAYUNO', 'ANTES DE LA COMIDA', 'DESPUES DE LA COMIDA', 'ANTES DE LA CENA', 'DESPUES DE LA CENA', 'ANTES DE DORMIR', 'A LAS 3:00 A.M.'];
     }
   }
 

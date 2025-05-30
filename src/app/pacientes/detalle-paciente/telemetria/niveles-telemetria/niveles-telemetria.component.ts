@@ -72,6 +72,11 @@ export class NivelesTelemetriaComponent implements OnInit {
     }
   }
 
+  cambiarTipo(nuevoTipo: string) {
+    this.tipo = nuevoTipo;
+    this.filtrarNiveles();
+  }
+
   obtenerNivelesIniciales(): void {
     this.pacienteService.getNivelesGlucosa(this.pacienteId).subscribe((r: any) => {
       this.niveles.glucosa = Array.isArray(r) ? r : r.content;

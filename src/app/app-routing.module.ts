@@ -33,6 +33,9 @@ const routes: Routes = [
   { path: 'medicos', loadChildren: () => import('./medicos/medicos.module').then(m => m.MedicosModule) },
   { path: 'pacientes', loadChildren: () => import('./pacientes/paciente.module').then(m => m.PacienteModule) },
   { path: 'consultas', loadChildren: () => import('./consulta/consultas.module').then(m => m.ConsultasModule) },
+  { path: 'agenda', loadChildren: () => import('./agenda/agenda.module').then(m => m.AgendaModule) },
+  { path: 'formatos', loadChildren: () => import('./formatos/formatos.module').then(m => m.FormatosModule) },
+
 
 
   // Página de error

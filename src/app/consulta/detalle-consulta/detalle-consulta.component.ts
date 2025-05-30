@@ -47,29 +47,29 @@ export class DetalleConsultaComponent implements OnInit {
   tabsTitulos = [
     { valor: 'subjetivo', titulo: 'SUBJETIVO', icono: 'fa-bars', inicial: 'S' },
     { valor: 'objetivo', titulo: 'OBJETIVO', icono: 'fa-stethoscope', inicial: 'O' },
-    { valor: 'analisis', titulo: 'ANÁLISIS', icono: 'fa-clipboard', inicial: 'A' },
-    { valor: 'plan', titulo: 'PLAN TERAPÉUTICO Y TRATAMIENTO', icono: 'fa-notes-medical', inicial: 'P' }
+    { valor: 'analisis', titulo: 'ANALISIS', icono: 'fa-clipboard', inicial: 'A' },
+    { valor: 'plan', titulo: 'PLAN TERAPEUTICO Y TRATAMIENTO', icono: 'fa-notes-medical', inicial: 'P' }
   ];
   tratamientoSeleccionado: any = null;
-acordeones = [
-  { titulo: 'Formatos' },
-  { titulo: 'Estudios' },
-  { titulo: 'Imágenes' },
-  { titulo: 'Documentos' },
-  { titulo: 'Recetas' }
-];
-
-dolometros = [
-  { nivel: 1, doloDescripcion: 'Dolor leve' },
-  { nivel: 2, doloDescripcion: 'Dolor moderado' },
-  { nivel: 3, doloDescripcion: 'Dolor severo' }
-];
+  acordeones = [
+    { titulo: 'FORMATOS' },
+    { titulo: 'ESTUDIOS' },
+    { titulo: 'IMÁGENES' },
+    { titulo: 'DOCUMENTOS' },
+    { titulo: 'RECETAS' }
+  ];
+  
+  dolometros = [
+    { nivel: 1, doloDescripcion: 'DOLOR LEVE' },
+    { nivel: 2, doloDescripcion: 'DOLOR MODERADO' },
+    { nivel: 3, doloDescripcion: 'DOLOR SEVERO' }
+  ];
 
 
 camposVitalesInline = [
-  { prop: 'temperatura', label: 'Temperatura', unidad: '°C' },
-  { prop: 'peso', label: 'Peso', unidad: 'KG' },
-  { prop: 'talla', label: 'Talla', unidad: 'CM' },
+  { prop: 'temperatura', label: 'TEMPERATURA', unidad: '°C' },
+  { prop: 'peso', label: 'PESO', unidad: 'KG' },
+  { prop: 'talla', label: 'TALLA', unidad: 'CM' },
   { prop: 'imc', label: 'IMC', unidad: '' },
   { prop: 'frecCardiaca', label: 'F.C.', unidad: 'x min.' },
   { prop: 'frecRespiratoria', label: 'F.R.', unidad: 'x min.' },

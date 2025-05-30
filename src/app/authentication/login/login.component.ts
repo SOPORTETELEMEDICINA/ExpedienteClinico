@@ -9,6 +9,7 @@ import { routes } from 'src/app/shared/routes/routes';
 import { Login } from '../authenticationClasses';
 import { environment } from 'src/environments/environment';
 import { NotificationService } from 'src/app/shared/utils/notification.service';
+import { SwalService } from 'src/app/core/services/swal.service';
 
 @Component({
   selector: 'app-login',
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit {
    // private userDetailsService: UserDetailsService,
     private i18nService: I18nService,
    // private pacienteService : PacienteService,
+   private swal: SwalService,
     private notificationService: NotificationService
     ) {
     // this.userDetailsService.usersDetails = new MedicoView();
@@ -94,53 +96,22 @@ export class LoginComponent implements OnInit {
     this.authService.loadToken(null);
 
     // SUBSCRIBE AND MAKE THE REQUEST
-    this.authService.login(LOGIN)
-        .subscribe((toks) => {
-            const tipoUsuario = toks.idTipoUsuario;
-            let ruta = '';
-            
-            switch (tipoUsuario) {
-              case 1: ruta = routes.adminDashboard; break;
-              case 2: ruta = routes.doctorDashboard; break;
-              case 3: ruta = routes.patientDashboard; break;
-              default: ruta = routes.error404; break;
-            }
-            this.router.navigateByUrl(ruta);
-
-        }, (error) => {
-            this.isLoading = false;
-            if (error.status === 500) {
-                    this.notificationService.smallBox(
-                      {
-                          title: this.MSG_ERROR_500,
-                          content: '<br>',
-                          color: "#d9534f",
-                          icon: "fa fa-times",
-                          timeout: 3000
-                      }
-                    );
-            } else if (error.status === 400) {
-                this.notificationService.smallBox(
-                    {
-                        title: this.MSG_ERROR_FAIL,
-                        content: '<br>',
-                        color: "#d9534f",
-                        icon: "fa fa-times",
-                        timeout: 3000
-                    }
-                  );
-            } else {
-                this.notificationService.smallBox(
-                    {
-                        title: this.MSG_ERROR_UNKNOWN,
-                        content: '<br>',
-                        color: "#d9534f",
-                        icon: "fa fa-times",
-                        timeout: 3000
-                    }
-                  );
-            }
-        });
+    this.authService.login(LOGIN).subscribe((toks) => {
+      const tipoUsuario = toks.idTipoUsuario;
+      localStorage.setItem('userData', JSON.stringify(toks)); // Guardamos datos para el Home
+      this.router.navigateByUrl('/home');
+    
+    }, (error) => {
+      this.isLoading = false;
+      if (error.status === 500) {
+        this.swal.error( this.MSG_ERROR_500);
+      } else if (error.status === 400) {
+        this.swal.error(this.MSG_ERROR_FAIL);
+      } else {
+        this.swal.error(this.MSG_ERROR_UNKNOWN);
+      }
+    });
+    
 }
 
 

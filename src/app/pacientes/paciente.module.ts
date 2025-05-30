@@ -18,10 +18,12 @@ import { LinealComponent } from './detalle-paciente/telemetria/niveles-telemetri
 import { BarrasComponent } from './detalle-paciente/telemetria/niveles-telemetria/charts/barras/barras.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NivelTelemetriaModalComponent } from './detalle-paciente/telemetria/niveles-telemetria/modal/nivel-telemetria-modal/nivel-telemetria-modal.component';
+import { ListaPacientesCompartidosComponent } from './lista-pacientes-compartidos/lista-pacientes-compartidos.component';
+import { ListaPacientesNoAtendidosComponent } from './lista-pacientes-no-atendidos/lista-pacientes-no-atendidos.component';
 
 
 @NgModule({
-  declarations: [ ListaPacientesComponent,CrearPacienteComponent,PacienteDetalleComponent
+  declarations: [ ListaPacientesComponent,CrearPacienteComponent,PacienteDetalleComponent,ListaPacientesCompartidosComponent,ListaPacientesNoAtendidosComponent
     ,PerfilComponent
     ,CursoClinicoComponent
     //,ConsultaActualComponent
@@ -31,7 +33,7 @@ import { NivelTelemetriaModalComponent } from './detalle-paciente/telemetria/niv
     ,HojaSeguimientoComponent
     ,NivelesTelemetriaComponent
     ,NivelTelemetriaModalComponent
-    //,CuestionariosComponent
+    ,CuestionariosComponent
 
   ],
   imports: [

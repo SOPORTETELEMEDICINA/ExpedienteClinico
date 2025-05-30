@@ -1,59 +1,131 @@
-<div class="page-wrapper">
-  <div class="content">
-  
-      <!-- Page Header -->
-      <div class="page-header">
-          <div class="row">
-              <div class="col-sm-12">
-                  <ul class="breadcrumb">
-                      <!-- <li class="breadcrumb-item"><a [routerLink]="routes.adminDashboard">Dashboard </a></li> -->
-                      <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                      <li class="breadcrumb-item active">Doctor Dashboard</li>
-                  </ul>
-              </div>
-          </div>
-      </div>
-      <!-- /Page Header -->
-      
-      <div class="good-morning-blk">
-          <div class="row">
-              <div class="col-md-6">
-                  <div class="morning-user">
-                      <h2>Good Morning, <span>Daniel Bruk</span></h2>
-                      <p>Have a nice day at work</p>
-                  </div>
-              </div>
-              <div class="col-md-6 position-blk">
-                  <div class="morning-img">
-                      <img src="assets/img/morning-img-01.png" alt="">
-                  </div>
-              </div>
-          </div>
-      </div>
+<!-- doctor-dashboard.component.html -->
 
-          <div class="page-header">
-            <div class="row">
-              <div class="col-sm-12">
-                <h3 class="page-title">¡Bienvenido Doctor!</h3>
-                <ul class="breadcrumb">
-                  <li class="breadcrumb-item active">Dashboard</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-      
-          <!-- Widgets -->
-          <div class="row">
-            <div class="col-md-6 col-xl-3">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="mb-2">Pacientes activos</h4>
-                  <p class="mb-0">34</p>
-                </div>
-              </div>
-            </div>
-          </div>
-      
- 
+<!-- Saludo inicial -->
+<div class="good-morning-blk">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="morning-user">
+        <h2>BUEN DIA, <span>{{nombreCompleto}}</span></h2>
+        <p>¡QUE TENGAS UNA EXCELENTE JORNADA!</p>
+      </div>
+    </div>
+    <div class="col-md-6 position-blk">
+      <div class="morning-img">
+        <img src="assets/img/morning-img-01.png" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Widgets resumen -->
+<div class="row">
+  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3" *ngFor="let item of dashboardStats">
+    <div class="dash-widget">
+      <div class="dash-boxs comman-flex-center">
+        <img [src]="item.icon" alt="">
+      </div>
+      <div class="dash-content dash-count">
+        <h4>{{ item.title }}</h4>
+        <h2><span>{{ item.value }}</span></h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Gráfica de pacientes por género -->
+<div class="row">
+  <!-- Gráfica de barras: por género y mes -->
+  <div class="col-12 col-md-12 col-lg-8 col-xl-9">
+    <div class="card h-100">
+      <div class="card-body">
+        <h4 class="card-title">PACIENTES POR GENERO</h4>
+        <apx-chart
+          [series]="pacientesPorGenero.series"
+          [chart]="pacientesPorGenero.chart"
+          [xaxis]="pacientesPorGenero.xaxis"
+          [colors]="pacientesPorGenero.colors"
+          [dataLabels]="{ enabled: false }"
+          [yaxis]="pacientesPorGenero.yaxis">
+        </apx-chart>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráfica de donut: crónicos -->
+  <div class="col-12 col-md-12 col-lg-4 col-xl-3 d-flex">
+    <div class="card w-100">
+      <div class="card-body">
+        <h4 class="card-title">PACIENTES CRONICOS</h4>
+        <apx-chart
+          [series]="pacientesCronicos.series"
+          [dataLabels]="{ enabled: false }"
+          [chart]="pacientesCronicos.chart"
+          [labels]="pacientesCronicos.labels"
+          [colors]="pacientesCronicos.colors"
+          [title]="pacientesCronicos.title"
+          [legend]="pacientesCronicos.legend">
+        </apx-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabla de consultas pendientes -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title d-inline-block">CONSULTAS PENDIENTES</h4>
+        <a [routerLink]="['/consultas']" class="patient-views float-end">MOSTRAR TODAS</a>
+      </div>
+      <div class="card-body p-0 table-dash">
+        <div class="table-responsive">
+          <table class="table mb-0 border-0 custom-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" class="form-check-input" /></th>
+                <th>EXPEDIENTE / PACIENTE</th>
+                <th>FECHA / HORA</th>
+                <th>TIPO</th>
+                <th>MOTIVO</th>
+                <th>MEDICO</th>
+                <th>ACCION</th>
+                <th>ESTATUS</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let consulta of consultasProximas">
+                <td><input type="checkbox" class="form-check-input" /></td>
+                <td>{{ consulta.numeroConsulta }}<br><span class="h5">{{ consulta.nombrePaciente }}</span></td>
+                <td class="appoint-time">{{ consulta.fechaConsulta | date:'dd/MM/yyyy hh:mm a' }}</td>
+                <td class="table-primary">{{ consulta.canal?.toUpperCase() }}</td>
+                <td>{{ consulta.motivoConsulta || '-' }}</td>
+                <td class="table-image appoint-doctor">
+                  <img src="assets/img/profiles/avatar-02.jpg" width="28" class="rounded-circle" />
+                  <h2>{{ consulta.nombreMedico }}</h2>
+                </td>
+                <td>{{ consulta.motivoConsulta || '-' }}</td>
+                <td><button class="custom-badge status-green">CAPTURAR SIGNOS</button></td>
+                <td class="text-end">
+                  <div class="dropdown">
+                    <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown">
+                      <i class="fa fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="#"><i class="fa fa-pen-to-square me-1"></i> EDITAR</a>
+                      <a class="dropdown-item" href="#"><i class="fa fa-trash-alt me-1"></i> ELIMINAR</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="consultasProximas.length === 0">
+                <td colspan="9" class="text-center text-muted">NO HAY CONSULTAS PROXIMAS.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

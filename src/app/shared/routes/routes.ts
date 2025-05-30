@@ -17,6 +17,14 @@ export class routes {
   public static get patientsList(): string {
     return this.baseUrl + '/pacientes/lista';
   }
+
+  public static get patientsListNoA(): string {
+    return this.baseUrl + '/pacientes/lista-no-atendidos';
+  }
+
+  public static get patientsListCompartidos(): string {
+    return this.baseUrl + '/pacientes/lista-compartidos';
+  }
   
   public static get addPatient(): string {
     return this.baseUrl + '/pacientes/agregar';
@@ -151,6 +159,9 @@ export class routes {
   }
   public static get doctorDashboard(): string {
     return this.baseUrl + '/dashboard/doctor-dashboard';
+  }
+  public static get home(): string {
+    return this.baseUrl + '/home';
   }
   public static get patientDashboard(): string {
     return this.baseUrl + '/dashboard/patient-dashboard';

@@ -6,9 +6,9 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="['/medicos']">Médicos</a></li>
+            <li class="breadcrumb-item"><a [routerLink]="['/medicos']">MEDICOS</a></li>
             <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-            <li class="breadcrumb-item active">Lista de Médicos</li>
+            <li class="breadcrumb-item active">LISTA DE MEDICOS</li>
           </ul>
         </div>
       </div>
@@ -26,10 +26,10 @@
               <div class="row align-items-center">
                 <div class="col">
                   <div class="doctor-table-blk">
-                    <h3>Lista de Médicos</h3>
+                    <h3>LISTA DE MEDICOS</h3>
                     <div class="doctor-search-blk">
                       <div class="top-nav-search table-search-blk">
-                        <input #txtBuscar type="text" class="form-control" placeholder="Buscar médico..." (keyup)="buscar()">
+                        <input #txtBuscar type="text" class="form-control" placeholder="Buscar medico..." (keyup)="buscar()">
                         <a class="btn" (click)="buscar()"><img src="assets/img/icons/search-normal.svg" alt="Buscar"></a>
                       </div>
                       <div class="add-group">
@@ -92,7 +92,7 @@
                     </td>
                     <td>{{ medico.email }}</td>
                     <td class="text-end">
-                      <a [routerLink]="['/medicos/editar', medico.idMedico]" class="btn btn-sm btn-outline-primary">Editar</a>
+                      <a [routerLink]="['/medicos/editar', medico.idMedico]" class="btn btn-sm btn-outline-primary">EDITAR</a>
                     </td>
                   </tr>
                 </tbody>
@@ -103,7 +103,7 @@
                 <div class="row align-items-center">
                   <div class="col-sm-12 col-md-6">
                     <div class="dataTables_info ps-2">
-                      Mostrando {{ fin }} de {{ totalRegistros }} registros
+                      MOSTRANDO {{ fin }} DE {{ totalRegistros }} REGISTROS
                     </div>
                   </div>
 
@@ -111,13 +111,13 @@
                     <div class="pagination_section d-flex justify-content-end pe-2">
                       <ul class="pagination pagination-sm mb-0">
                         <li class="page-item" [class.disabled]="paginaActual === 1">
-                          <a class="page-link" (click)="cambiarPagina(paginaActual - 1)">Anterior</a>
+                          <a class="page-link" (click)="cambiarPagina(paginaActual - 1)">ANTERIOR</a>
                         </li>
                         <li *ngFor="let p of paginas" class="page-item" [class.active]="p === paginaActual">
                           <a class="page-link" (click)="cambiarPagina(p)">{{ p }}</a>
                         </li>
                         <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
-                          <a class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</a>
+                          <a class="page-link" (click)="cambiarPagina(paginaActual + 1)">SIGUIENTE</a>
                         </li>
                       </ul>
                     </div>

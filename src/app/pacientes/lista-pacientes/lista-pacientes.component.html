@@ -6,9 +6,9 @@
         <div class="row">
           <div class="col-sm-12">
             <ul class="breadcrumb">
-              <li class="breadcrumb-item"><a [routerLink]="['/pacientes']">Pacientes</a></li>
+              <li class="breadcrumb-item"><a [routerLink]="['/pacientes']">PACIENTES</a></li>
               <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-              <li class="breadcrumb-item active">Lista de Pacientes</li>
+              <li class="breadcrumb-item active">LISTA DE PACIENTES</li>
             </ul>
           </div>
         </div>
@@ -26,10 +26,10 @@
                 <div class="row align-items-center">
                   <div class="col">
                     <div class="doctor-table-blk">
-                      <h3>Lista de Pacientes</h3>
+                      <h3>LISTA DE PACIENTES</h3>
                       <div class="doctor-search-blk">
                         <div class="top-nav-search table-search-blk">
-                          <input #txtBuscar type="text" class="form-control" placeholder="Buscar paciente..." (keyup)="buscar()">
+                          <input #txtBuscar type="text" class="form-control" placeholder="BUSCAR PACIENTE..." (keyup)="buscar()">
                           <a class="btn" (click)="buscar()">
                             <img src="assets/img/icons/search-normal.svg" alt="Buscar">
                           </a>
@@ -93,16 +93,16 @@
                       <td>{{ paciente.userName }}</td>
                       <td class="text-end">
                         <a [routerLink]="['/pacientes/editar', paciente.idPaciente]" class="btn btn-sm btn-outline-success" >
-                          <i class="fas fa-pen"></i> Editar
+                          <i class="fas fa-pen"></i> EDITAR
                         </a>
                         <a [routerLink]="['/pacientes/detalle', paciente.idPaciente, 'perfil']" class="btn btn-sm btn-outline-primary">
-                          Ver
+                          VER
                         </a>
                         <!-- <button class="btn btn-sm btn-outline-primary" (click)="verDetalle(paciente.idPaciente)">Ver</button> -->
                       </td>
                     </tr>
                     <tr *ngIf="pacientes.length === 0 && !isLoading">
-                      <td colspan="5" class="text-center text-muted py-4">No hay pacientes encontrados.</td>
+                      <td colspan="5" class="text-center text-muted py-4">NO HAY PACIENTES ENCONTRADOS.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -112,7 +112,7 @@
                   <div class="row align-items-center">
                     <div class="col-sm-12 col-md-6">
                       <div class="dataTables_info ps-2">
-                        Mostrando {{ fin }} de {{ totalRegistros }} registros
+                        MOSTRANDO {{ fin }} DE {{ totalRegistros }} REGISTROS
                       </div>
                     </div>
   
@@ -120,7 +120,7 @@
                       <div class="pagination_section d-flex justify-content-end pe-2">
                         <ul class="pagination pagination-sm mb-0">
                           <li class="page-item" [class.disabled]="paginaActual === 1">
-                            <a class="page-link" (click)="cambiarPagina(paginaActual - 1)">Anterior</a>
+                            <a class="page-link" (click)="cambiarPagina(paginaActual - 1)">ANTERIOR</a>
                           </li>
                           <ng-container *ngFor="let p of paginasReducidas">
                             <li *ngIf="p !== '...'" class="page-item" [class.active]="p === paginaActual">
@@ -131,7 +131,7 @@
                             </li>
                           </ng-container>
                           <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
-                            <a class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</a>
+                            <a class="page-link" (click)="cambiarPagina(paginaActual + 1)">SIGUIENTE</a>
                           </li>
                         </ul>
                       </div>

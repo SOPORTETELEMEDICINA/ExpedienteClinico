@@ -6,9 +6,9 @@
         <div class="row">
           <div class="col-sm-12">
             <ul class="breadcrumb">
-              <li class="breadcrumb-item">Consultas</li>
+              <li class="breadcrumb-item">CONSULTAS</li>
               <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-              <li class="breadcrumb-item active">Lista de Consultas</li>
+              <li class="breadcrumb-item active">LISTA DE CONSULTAS</li>
             </ul>
           </div>
         </div>
@@ -26,10 +26,10 @@
                 <div class="row align-items-center">
                   <div class="col">
                     <div class="doctor-table-blk">
-                      <h3>Lista de Consultas</h3>
+                      <h3>LISTA DE CONSULTAS</h3>
                       <div class="doctor-search-blk">
                         <div class="top-nav-search table-search-blk">
-                          <input #txtBuscar type="text" class="form-control" placeholder="Buscar consulta por nombre..." (keyup)="buscar()">
+                          <input #txtBuscar type="text" class="form-control" placeholder="BUSCAR CONSULTA POR NOMBRE..." (keyup)="buscar()">
                           <a class="btn" (click)="buscar()">
                             <img src="assets/img/icons/search-normal.svg" alt="Buscar">
                           </a>
@@ -66,14 +66,14 @@
                       <th>TIPO DE CONSULTA</th>
                       <th>MOTIVO</th>
                       <th>ESTATUS</th>
-                      <th class="text-end">ACCIÓN</th>
+                      <th class="text-end">ACCION</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngIf="isLoading">
                       <td colspan="100%" class="text-center py-5">
                         <div class="spinner-border text-primary" role="status">
-                          <span class="visually-hidden">Cargando...</span>
+                          <span class="visually-hidden">CARGANDO...</span>
                         </div>
                       </td>
                     </tr>
@@ -103,12 +103,12 @@
                         <a class="btn btn-outline-primary btn-sm" 
                         [routerLink]="['/pacientes/detalle', consulta.idPaciente, 'consulta-actual']"
                         [queryParams]="{ idConsulta: consulta.idConsulta }" >
-                          {{ consulta.estadoConsulta === 'FINALIZADA' ? 'Nota médica' : 'Ir a consulta' }}
+                          {{ consulta.estadoConsulta === 'FINALIZADA' ? 'NOTA MEDICA' : 'IR A CONSULTA' }}
                         </a>
                       </td>
                     </tr>
                     <tr *ngIf="consultas.length === 0 && !isLoading">
-                      <td colspan="6" class="text-center text-muted py-4">No hay consultas registradas.</td>
+                      <td colspan="6" class="text-center text-muted py-4">NO HAY CONSULTAS REGISTRADAS.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -118,7 +118,7 @@
                   <div class="row align-items-center">
                     <div class="col-sm-12 col-md-6">
                       <div class="dataTables_info ps-2">
-                        Mostrando {{ fin }} de {{ totalConsultas }} resultados
+                        MOSTRANDO {{ fin }} DE {{ totalConsultas }} RESULTADOS
                       </div>
                     </div>
   
@@ -126,7 +126,7 @@
                       <div class="pagination_section d-flex justify-content-end pe-2">
                         <ul class="pagination pagination-sm mb-0">
                           <li class="page-item" [class.disabled]="paginaActual === 1">
-                            <a class="page-link" (click)="cambiarPagina(paginaActual - 1)">Anterior</a>
+                            <a class="page-link" (click)="cambiarPagina(paginaActual - 1)">ANTERIOR</a>
                           </li>
                           <ng-container *ngFor="let p of paginasReducidas">
                             <li *ngIf="p !== '...'" class="page-item" [class.active]="p === paginaActual">
@@ -137,7 +137,7 @@
                             </li>
                           </ng-container>
                           <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
-                            <a class="page-link" (click)="cambiarPagina(paginaActual + 1)">Siguiente</a>
+                            <a class="page-link" (click)="cambiarPagina(paginaActual + 1)">SIGUIENTE</a>
                           </li>
                         </ul>
                       </div>

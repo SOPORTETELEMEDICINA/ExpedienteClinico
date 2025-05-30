@@ -1,0 +1,36 @@
+<div class="page-wrapper">
+    <div class="content">
+      
+      <!-- ENCABEZADO GENERAL -->
+      <div class="page-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">DASHBOARD <li>
+              <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
+              <li class="breadcrumb-item active"> {{
+                tipoUsuario === 1 ? 'ADMINISTRADOR' :
+                tipoUsuario === 2 ? 'MEDICO' :
+                tipoUsuario === 3 ? 'PACIENTE' : 'DASHBOARD'
+              }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+     
+  
+      <!-- DASHBOARD COMPONENT DINÁMICO -->
+      <ng-container *ngIf="tipoUsuario === 1">
+        <app-admin-dashboard></app-admin-dashboard>
+      </ng-container>
+      <ng-container *ngIf="tipoUsuario === 2">
+        <app-doctor-dashboard></app-doctor-dashboard>
+      </ng-container>
+      <ng-container *ngIf="tipoUsuario === 3">
+        <app-patient-dashboard></app-patient-dashboard>
+      </ng-container>
+  
+    </div>
+  </div>
+  

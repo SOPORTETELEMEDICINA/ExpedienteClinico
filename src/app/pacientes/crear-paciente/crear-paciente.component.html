@@ -5,9 +5,9 @@
           <div class="col-sm-12">
             <ul class="breadcrumb">
               <li class="breadcrumb-item">
-                <a [routerLink]="['/pacientes']">Pacientes</a>
+                <a [routerLink]="['/pacientes']">PACIENTES</a>
               </li>
-              <li class="breadcrumb-item active">Nuevo Paciente</li>
+              <li class="breadcrumb-item active">NUEVO PACIENTE</li>
             </ul>
           </div>
         </div>
@@ -16,13 +16,13 @@
       <form [formGroup]="formDatosGenerales" (ngSubmit)="guardarPaciente()">
         <ul class="nav nav-tabs nav-tabs-solid nav-justified">
           <li class="nav-item" (click)="cambiarTab(0)">
-            <a class="nav-link" [class.active]="currentTab === 0" href="javascript:void(0)">Datos Generales</a>
+            <a class="nav-link" [class.active]="currentTab === 0" href="javascript:void(0)">DATOS GENERALES</a>
           </li>
           <li class="nav-item" (click)="cambiarTab(1)">
-            <a class="nav-link" [class.active]="currentTab === 1" href="javascript:void(0)">Datos Complementarios / Clínicos</a>
+            <a class="nav-link" [class.active]="currentTab === 1" href="javascript:void(0)">DATOS COMPLEMENTARIOS / CLINICOS</a>
           </li>
           <li class="nav-item" (click)="cambiarTab(2)">
-            <a class="nav-link" [class.active]="currentTab === 2" href="javascript:void(0)">Contactos</a>
+            <a class="nav-link" [class.active]="currentTab === 2" href="javascript:void(0)">CONTACTOS</a>
           </li>
         </ul>
   
@@ -30,66 +30,66 @@
             <!-- TAB 1 -->
             <div *ngIf="currentTab === 0" class="tab-pane show active">
             <div class="row g-3">
-              <div class="col-md-4 form-group local-forms"><label>Nombre</label><input class="form-control" formControlName="nombre"></div>
-              <div class="col-md-4 form-group local-forms"><label>Apellido Paterno</label><input class="form-control" formControlName="apellidoPaterno"></div>
-              <div class="col-md-4 form-group local-forms"><label>Apellido Materno</label><input class="form-control" formControlName="apellidoMaterno"></div>
-              <div class="col-md-4 form-group local-forms"><label>Fecha de Nacimiento</label><input type="date" class="form-control" formControlName="fechaNacimiento"></div>
+              <div class="col-md-4 form-group local-forms"><label>NOMBRE</label><input class="form-control" formControlName="nombre"></div>
+              <div class="col-md-4 form-group local-forms"><label>APELLIDO PATERNO</label><input class="form-control" formControlName="apellidoPaterno"></div>
+              <div class="col-md-4 form-group local-forms"><label>APELLIDO MATERNO</label><input class="form-control" formControlName="apellidoMaterno"></div>
+              <div class="col-md-4 form-group local-forms"><label>FECHA DE NACIMIENTO</label><input type="date" class="form-control" formControlName="fechaNacimiento"></div>
               <div class="col-md-4 form-group local-forms"><label>CURP</label><input class="form-control" formControlName="curp"></div>
               <div class="col-md-4 form-group local-forms"><label>RFC</label><input class="form-control" formControlName="rfc"></div>
-              <div class="col-md-4 form-group local-forms"><label>Sexo</label><select class="form-select" formControlName="sexo"><option value="HOMBRE">HOMBRE</option><option value="MUJER">MUJER</option></select></div>
-              <div class="col-md-4 form-group local-forms"><label>Estado Civil</label>
+              <div class="col-md-4 form-group local-forms"><label>SEXO</label><select class="form-select" formControlName="sexo"><option value="HOMBRE">HOMBRE</option><option value="MUJER">MUJER</option></select></div>
+              <div class="col-md-4 form-group local-forms"><label>ESTADO CIVIL</label>
              <!-- Escolaridad -->
                         <select formControlName="estadoCivil" class="form-select">
                           <option *ngFor="let scv of estadosCiviles" [value]="scv.nombre || scv">{{ scv.nombre || scv }}</option>
                         </select>
             </div>
-              <div class="col-md-4 form-group local-forms"><label>Religión</label>
+              <div class="col-md-4 form-group local-forms"><label>RELIGION</label>
              <!-- Escolaridad -->
                         <select formControlName="religion" class="form-select">
                           <option *ngFor="let rel of religiones" [value]="rel.relDescripcion || rel">{{ rel.relDescripcion || rel }}</option>
                         </select>
             </div>
-              <div class="col-md-4 form-group local-forms"><label>Teléfono Fijo</label><input class="form-control" formControlName="telefonoLocal"></div>
-              <div class="col-md-4 form-group local-forms"><label>Teléfono Celular</label><input class="form-control" formControlName="telefonoCelular"></div>
-              <div class="col-md-4 form-group local-forms"><label>Correo Electrónico</label><input class="form-control" formControlName="email"></div>
-              <div class="col-md-4 form-group local-forms"><label>Nacionalidad</label>
+              <div class="col-md-4 form-group local-forms"><label>TELEFONO FIJO</label><input class="form-control" formControlName="telefonoLocal"></div>
+              <div class="col-md-4 form-group local-forms"><label>TELEFONO CELULAR</label><input class="form-control" formControlName="telefonoCelular"></div>
+              <div class="col-md-4 form-group local-forms"><label>CORREO ELECTRONICO</label><input class="form-control" formControlName="email"></div>
+              <div class="col-md-4 form-group local-forms"><label>NACIONALIDAD</label>
              <!-- Escolaridad -->
                         <select formControlName="nacionalidad" class="form-select">
                           <option *ngFor="let nac of nacionalidades" [value]="nac.nacPaisDescripcion || nac">{{ nac.nacPaisDescripcion || nac }}</option>
                         </select>
             </div>
-              <div class="col-md-4 form-group local-forms"><label>Usuario</label><input class="form-control" formControlName="username"></div>
-              <div class="col-md-4 form-group local-forms"><label>Contraseña</label><input type="password" class="form-control" formControlName="password"></div>
+              <div class="col-md-4 form-group local-forms"><label>USUARIO</label><input class="form-control" formControlName="username"></div>
+              <div class="col-md-4 form-group local-forms"><label>CONTRASEÑA</label><input type="password" class="form-control" formControlName="password"></div>
             </div>
   
             <div class="row mt-4">
               <div class="col-12 d-flex justify-content-between align-items-center">
                 <h5>Domicilio Nuevo</h5>
-                <button type="button" class="btn btn-outline-primary btn-sm" (click)="agregarDomicilio()">Agregar Domicilio</button>
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="agregarDomicilio()">AGREGAR DOMICILIO</button>
               </div>
   
-              <div class="col-md-4 form-group local-forms"><label>Domicilio</label><input class="form-control" [(ngModel)]="nuevoDomicilio.domicilio" name="domicilio" [ngModelOptions]="{ standalone: true }"></div>
-              <div class="col-md-4 form-group local-forms"><label>Código Postal</label><input class="form-control" [(ngModel)]="nuevoDomicilio.codigoPostal" name="codigoPostal" [ngModelOptions]="{ standalone: true }"></div>
-              <div class="col-md-4 form-group local-forms"><label>Localidad</label><input class="form-control" [(ngModel)]="nuevoDomicilio.localidad" name="localidad" [ngModelOptions]="{ standalone: true }"></div>
-              <div class="col-md-4 form-group local-forms"><label>Municipio</label><input class="form-control" [(ngModel)]="nuevoDomicilio.municipio" name="municipio" [ngModelOptions]="{ standalone: true }"></div>
-              <div class="col-md-4 form-group local-forms"><label>Estado</label><input class="form-control" [(ngModel)]="nuevoDomicilio.estado" name="estado" [ngModelOptions]="{ standalone: true }"></div>
-              <div class="col-md-4 form-group local-forms"><label>País</label><input class="form-control" [(ngModel)]="nuevoDomicilio.pais" name="pais" [ngModelOptions]="{ standalone: true }"></div>
+              <div class="col-md-4 form-group local-forms"><label>DOMICILIO</label><input class="form-control" [(ngModel)]="nuevoDomicilio.domicilio" name="domicilio" [ngModelOptions]="{ standalone: true }"></div>
+              <div class="col-md-4 form-group local-forms"><label>CODIGO POSTAL</label><input class="form-control" [(ngModel)]="nuevoDomicilio.codigoPostal" name="codigoPostal" [ngModelOptions]="{ standalone: true }"></div>
+              <div class="col-md-4 form-group local-forms"><label>LOCALIDAD</label><input class="form-control" [(ngModel)]="nuevoDomicilio.localidad" name="localidad" [ngModelOptions]="{ standalone: true }"></div>
+              <div class="col-md-4 form-group local-forms"><label>MUNICIPIO</label><input class="form-control" [(ngModel)]="nuevoDomicilio.municipio" name="municipio" [ngModelOptions]="{ standalone: true }"></div>
+              <div class="col-md-4 form-group local-forms"><label>ESTADO</label><input class="form-control" [(ngModel)]="nuevoDomicilio.estado" name="estado" [ngModelOptions]="{ standalone: true }"></div>
+              <div class="col-md-4 form-group local-forms"><label>PAIS</label><input class="form-control" [(ngModel)]="nuevoDomicilio.pais" name="pais" [ngModelOptions]="{ standalone: true }"></div>
             </div>
             </div>
   
-            <!-- TAB 2: Datos Clínicos -->
+            <!-- TAB 2: Datos ClInicos -->
             <div *ngIf="currentTab === 1" class="tab-pane show active">
                 <form [formGroup]="formDatosClinicos">
                     <div class="row g-3">
-                    <div class="col-md-4 form-group local-forms"><label>Escolaridad</label>
+                    <div class="col-md-4 form-group local-forms"><label>ESCOLARIDAD</label>
                      <!-- Escolaridad -->
                         <select formControlName="escolaridad" class="form-select">
                           <option *ngFor="let esc of escolaridades" [value]="esc.formDescripcion || esc">{{ esc.formDescripcion || esc }}</option>
                         </select>
                     </div>
-                    <div class="col-md-4 form-group local-forms"><label>Ocupación Actual</label><input class="form-control" formControlName="ocupacion"></div>
-                    <div class="col-md-4 form-group local-forms"><label>Empresa</label><input class="form-control" formControlName="empresa"></div>
-                    <div class="col-md-4 form-group local-forms"><label>Tipo de Sangre</label>
+                    <div class="col-md-4 form-group local-forms"><label>OCUPACION ACTUAL</label><input class="form-control" formControlName="ocupacion"></div>
+                    <div class="col-md-4 form-group local-forms"><label>EMPRESA</label><input class="form-control" formControlName="empresa"></div>
+                    <div class="col-md-4 form-group local-forms"><label>TIPO DE SANGRE</label>
                         <select formControlName="tipoSangre" class="form-select">
                             <option *ngFor="let ts of tiposSangre" [value]="ts.nombre || ts">{{ ts.nombre || ts }}</option>
                           </select>
@@ -97,28 +97,28 @@
 
                     
 
-                    <div class="col-md-4 form-group local-forms"><label>Discapacidad</label>
+                    <div class="col-md-4 form-group local-forms"><label>DISCAPACIDAD</label>
                         <select formControlName="discapacidad" class="form-select">
                             <option *ngFor="let d of discapacidades" [value]="d.discDescripcion">{{ d.discDescripcion }}</option>
                           </select>
                     </div>
-                    <div class="col-md-4 form-group local-forms"><label>Institución Médica</label>
+                    <div class="col-md-4 form-group local-forms"><label>INSTITUCION MEDICA</label>
                         <select formControlName="institucion" class="form-select">
                             <option *ngFor="let i of instituciones" [value]="i.instnombre">{{ i.instnombre }}</option>
                           </select>
                     </div>
-                    <div class="col-md-4 form-group local-forms"><label>Alergias</label><textarea class="form-control" formControlName="alergias"></textarea></div>
-                    <div class="col-md-4 form-group local-forms"><label>Transfusiones</label><textarea class="form-control" formControlName="transfusiones"></textarea></div>
-                    <div class="col-md-4 form-group local-forms"><label>Antecedentes</label><textarea class="form-control" formControlName="antecedentes"></textarea></div>
+                    <div class="col-md-4 form-group local-forms"><label>ALERGIAS</label><textarea class="form-control" formControlName="alergias"></textarea></div>
+                    <div class="col-md-4 form-group local-forms"><label>TRANSFUSIONES</label><textarea class="form-control" formControlName="transfusiones"></textarea></div>
+                    <div class="col-md-4 form-group local-forms"><label>ANTECEDENTES</label><textarea class="form-control" formControlName="antecedentes"></textarea></div>
                     </div>
                     <div class="row mt-4">
                     <div class="col-12">
-                        <label class="form-label d-block">Seguimiento Crónico</label>
+                        <label class="form-label d-block">SEGUIMIENTO CRONICO</label>
                         <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-outline-primary" [class.active]="formDatosClinicos.get('diabetes')?.value" (click)="formDatosClinicos.get('diabetes')?.setValue(!formDatosClinicos.get('diabetes')?.value)">Diabetes</button>
-                        <button type="button" class="btn btn-outline-primary" [class.active]="formDatosClinicos.get('sobrepeso')?.value" (click)="formDatosClinicos.get('sobrepeso')?.setValue(!formDatosClinicos.get('sobrepeso')?.value)">Sobrepeso</button>
-                        <button type="button" class="btn btn-outline-primary" [class.active]="formDatosClinicos.get('presion')?.value" (click)="formDatosClinicos.get('presion')?.setValue(!formDatosClinicos.get('presion')?.value)">Presión Arterial</button>
-                        <button type="button" class="btn btn-outline-primary" [class.active]="formDatosClinicos.get('covid')?.value" (click)="formDatosClinicos.get('covid')?.setValue(!formDatosClinicos.get('covid')?.value)">Covid</button>
+                        <button type="button" class="btn btn-outline-primary" [class.active]="formDatosClinicos.get('diabetes')?.value" (click)="formDatosClinicos.get('diabetes')?.setValue(!formDatosClinicos.get('diabetes')?.value)">DIABETES</button>
+                        <button type="button" class="btn btn-outline-primary" [class.active]="formDatosClinicos.get('sobrepeso')?.value" (click)="formDatosClinicos.get('sobrepeso')?.setValue(!formDatosClinicos.get('sobrepeso')?.value)">SOBREPESO</button>
+                        <button type="button" class="btn btn-outline-primary" [class.active]="formDatosClinicos.get('presion')?.value" (click)="formDatosClinicos.get('presion')?.setValue(!formDatosClinicos.get('presion')?.value)">PRESION ARTERIAL</button>
+                        <button type="button" class="btn btn-outline-primary" [class.active]="formDatosClinicos.get('covid')?.value" (click)="formDatosClinicos.get('covid')?.setValue(!formDatosClinicos.get('covid')?.value)">SATURACION DE OXIGENO</button>
                         </div>
                     </div>
                     </div>
@@ -129,19 +129,19 @@
             <div *ngIf="currentTab === 2" class="tab-pane show active">
                 <form [formGroup]="formContacto">
                   <div class="row g-3">
-                    <div class="col-md-4 form-group local-forms"><label>Nombre</label><input class="form-control" formControlName="nombre"></div>
-                    <div class="col-md-2 form-group local-forms"><label>Edad</label><input class="form-control" formControlName="edad"></div>
-                    <div class="col-md-3 form-group local-forms"><label>Parentesco</label><select class="form-select" formControlName="parentesco"><option *ngFor="let p of parentescos" [value]="p.nombre">{{ p.nombre }}</option></select></div>
-                    <div class="col-md-3 form-group local-forms"><label>Convivencia</label><select class="form-select" formControlName="convivencia"><option *ngFor="let c of convivencias" [value]="c.nombre">{{ c.nombre }}</option></select></div>
-                    <div class="col-md-2 form-group local-forms"><label>Prioridad</label><select class="form-select" formControlName="prioridad"><option *ngFor="let pr of prioridades" [value]="pr">{{ pr }}</option></select></div>
-                    <div class="col-md-4 form-group local-forms"><label>Teléfono Fijo</label><input class="form-control" formControlName="telefonoLocal"></div>
-                    <div class="col-md-4 form-group local-forms"><label>Teléfono Móvil</label><input class="form-control" formControlName="telefonoCelular"></div>
-                    <div class="col-md-4 form-group local-forms"><label>Teléfono Oficina</label><input class="form-control" formControlName="telefonoOficina"></div>
+                    <div class="col-md-4 form-group local-forms"><label>NOMBRE</label><input class="form-control" formControlName="nombre"></div>
+                    <div class="col-md-2 form-group local-forms"><label>EDAD</label><input class="form-control" formControlName="edad"></div>
+                    <div class="col-md-3 form-group local-forms"><label>PARENTESCO</label><select class="form-select" formControlName="parentesco"><option *ngFor="let p of parentescos" [value]="p.nombre">{{ p.nombre }}</option></select></div>
+                    <div class="col-md-3 form-group local-forms"><label>CONVIVENCIA</label><select class="form-select" formControlName="convivencia"><option *ngFor="let c of convivencias" [value]="c.nombre">{{ c.nombre }}</option></select></div>
+                    <div class="col-md-2 form-group local-forms"><label>PRIORIDAD</label><select class="form-select" formControlName="prioridad"><option *ngFor="let pr of prioridades" [value]="pr">{{ pr }}</option></select></div>
+                    <div class="col-md-4 form-group local-forms"><label>TELEFONO FIJO</label><input class="form-control" formControlName="telefonoLocal"></div>
+                    <div class="col-md-4 form-group local-forms"><label>TELEFONO MOVIL</label><input class="form-control" formControlName="telefonoCelular"></div>
+                    <div class="col-md-4 form-group local-forms"><label>TELEFONO OFICINA</label><input class="form-control" formControlName="telefonoOficina"></div>
                     <div class="col-md-4">
-                      <label class="form-label">¿Cuenta con llaves?</label>
+                      <label class="form-label">¿CUENTA CON LLAVES?</label>
                       <div class="btn-group w-100" role="group">
-                        <button type="button" class="btn btn-outline-primary" [class.active]="formContacto.get('cuentaConLlaves')?.value" (click)="formContacto.get('cuentaConLlaves')?.setValue(true)">Sí</button>
-                        <button type="button" class="btn btn-outline-primary" [class.active]="!formContacto.get('cuentaConLlaves')?.value" (click)="formContacto.get('cuentaConLlaves')?.setValue(false)">No</button>
+                        <button type="button" class="btn btn-outline-primary" [class.active]="formContacto.get('cuentaConLlaves')?.value" (click)="formContacto.get('cuentaConLlaves')?.setValue(true)">SI</button>
+                        <button type="button" class="btn btn-outline-primary" [class.active]="!formContacto.get('cuentaConLlaves')?.value" (click)="formContacto.get('cuentaConLlaves')?.setValue(false)">NO</button>
                       </div>
                     </div>
                   </div>
@@ -150,10 +150,10 @@
         </div>
   
         <div class="form-group d-flex justify-content-between mt-4">
-          <button type="button" class="btn btn-secondary" [disabled]="currentTab === 0" (click)="cambiarTab(currentTab - 1)">Anterior</button>
+          <button type="button" class="btn btn-secondary" [disabled]="currentTab === 0" (click)="cambiarTab(currentTab - 1)">ANTERIOR</button>
           <div>
-            <button type="button" class="btn btn-outline-secondary me-2" [disabled]="currentTab === 2" (click)="cambiarTab(currentTab + 1)">Siguiente</button>
-            <button type="submit" class="btn btn-primary" [disabled]="!formDatosGenerales.valid || !formDatosClinicos.valid || !formContacto.valid">Guardar Paciente</button>
+            <button type="button" class="btn btn-outline-secondary me-2" [disabled]="currentTab === 2" (click)="cambiarTab(currentTab + 1)">SIGUIENTE</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!formDatosGenerales.valid || !formDatosClinicos.valid || !formContacto.valid">GUARDAR PACIENTE</button>
           </div>
         </div>
       </form>

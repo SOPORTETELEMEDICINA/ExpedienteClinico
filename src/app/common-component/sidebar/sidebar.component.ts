@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 import { DataService } from 'src/app/shared/data/data.service';
 import { MenuItem, SideBarData } from 'src/app/shared/models/models';
 import { routes } from 'src/app/shared/routes/routes';
@@ -10,21 +11,53 @@ import { SideBarService } from 'src/app/shared/side-bar/side-bar.service';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit{
   base = '';
   page = '';
   currentUrl = '';
   public classAdd = false;
+
 
   public multilevel: Array<boolean> = [false, false, false];
 
   public routes = routes;
   public sidebarData: Array<SideBarData> = [];
 
+  public bitacorasExternas: any[] = [];
+
+  ngOnInit(): void {
+    const grupoId = localStorage.getItem('id_select_group');
+  
+    this.bitacorasExternas = [];
+  
+    if (grupoId === '36') {
+      this.bitacorasExternas.push({
+        label: 'REGISTRO DE ATENCIONES',
+        url: 'https://informes.consultaenlinea.mx/menu_ADO/',
+      });
+    }
+  
+    if (grupoId === '33') {
+      this.bitacorasExternas.push({
+        label: 'CASA SOL',
+        url: 'https://informes.consultaenlinea.mx/menu_CASASOL/',
+      });
+    }
+  
+    // Aplica a todos los demás grupos (médicos generales)
+    if (grupoId !== '36' && grupoId !== '33') {
+      this.bitacorasExternas.push({
+        label: 'BITACORA MEDICA',
+        url: 'https://informes.consultaenlinea.mx/menu_medico2/',
+      });
+    }
+  }
+
   constructor(
     private data: DataService,
     private router: Router,
-    private sideBar: SideBarService
+    private sideBar: SideBarService,
+    private authService : AuthService
   ) {
     this.sidebarData = this.data.sideBar;
     router.events.subscribe((event: object) => {
@@ -66,5 +99,13 @@ export class SidebarComponent {
       this.sideBar.expandSideBar.next("false");
     }
   }
+
+  getBitacoraUrl(): string {
+    const userId = this.authService.token?.userId; // o como obtengas el ID del usuario
+    return `https://bitacora.miapp.com/usuario/${userId}`;
+  }
+
+
+
 
 }
