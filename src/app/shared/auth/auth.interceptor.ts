@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpInterceptor,HttpRequest,HttpHandler,HttpEvent,HttpErrorResponse} from '@angular/common/http';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpErrorResponse
+} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
@@ -13,12 +19,17 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const tokenObj = this.authService.token;
 
-    let authReq = req;
+    let headers = req.headers;
+
     if (tokenObj && tokenObj.access_token) {
-      authReq = req.clone({
-        headers: req.headers.set('Authorization', `${tokenObj.token_type} ${tokenObj.access_token}`)
-      });
+      headers = headers.set('Authorization', `${tokenObj.token_type} ${tokenObj.access_token}`);
     }
+
+    if (tokenObj && tokenObj.hier_token) {
+      headers = headers.set('hier_token', tokenObj.hier_token);
+    }
+
+    const authReq = req.clone({ headers });
 
     return next.handle(authReq).pipe(
       catchError((err: HttpErrorResponse) => {

@@ -15,6 +15,26 @@ export class ConsultaService {
   constructor(private http: HttpClient) {}
 
 
+
+  createConsulta(consulta: ConsultaView): Observable<ConsultaView> {
+    return this.http.post<ConsultaView>(`${this.baseUrl}`, consulta).pipe(
+      catchError(err => {
+        console.error('Error al crear consulta', err);
+        return throwError(() => err);
+      })
+    );
+  }
+
+  updateConsulta(consulta: ConsultaView): Observable<ConsultaView> {
+    return this.http.put<ConsultaView>(`${this.baseUrl}`, consulta).pipe(
+      catchError(err => {
+        console.error('Error al actualizar consulta', err);
+        return throwError(() => err);
+      })
+    );
+  }
+
+
   getConsultas(request: NiomedicPageRequest): Observable<PageImpl<ConsultaView>> {
     const params = new HttpParams({ fromObject: this.serializeRequest(request) });
     return this.http.get<PageImpl<ConsultaView>>(`${this.baseUrl}/page`, { params });
@@ -107,4 +127,16 @@ export class ConsultaService {
       catchError(err => throwError(() => err))
     );
   }
+
+// usuario.service.ts o el servicio que uses
+generarLinkAltaPaciente(username: string, idUsuario: string, idGroup: number): Observable<string> {
+  const url = `${environment.api_url}/new-user/get-link?username=${username}&idUsuario=${idUsuario}&idGroup=${idGroup}`;
+  return this.http.get(url, { responseType: 'text' });
+}
+
+cambiarPassword(data: any): Observable<any> {
+  const url = `${environment.api_url}/users/changePassword`;
+  return this.http.post(url, data);
+}
+
 }

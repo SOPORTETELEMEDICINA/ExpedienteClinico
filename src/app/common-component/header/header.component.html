@@ -22,8 +22,8 @@
         <span class="fw-bold">NUEVA CONSULTA</span>
       </button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" (click)="irConsultaNueva()">CONSULTA NUEVA</a></li>
-        <li><a class="dropdown-item" (click)="irConsultaRapida()">CONSULTA RÁPIDA</a></li>
+        <li><a class="dropdown-item" (click)="irConsultaNueva()"  style="cursor: pointer;">CONSULTA NUEVA</a></li>
+        <li><a class="dropdown-item" (click)="irConsultaRapida()"  style="cursor: pointer;">CONSULTA RAPIDA</a></li>
       </ul>
     </div>
   </div>
@@ -35,8 +35,8 @@
         <i class="fa fa-edit"></i>
       </button>
       <ul class="dropdown-menu dropdown-menu-end">
-        <li><a class="dropdown-item" (click)="irConsultaNueva()">CONSULTA NUEVA</a></li>
-        <li><a class="dropdown-item" (click)="irConsultaRapida()">CONSULTA RÁPIDA</a></li>
+        <li><a class="dropdown-item" (click)="irConsultaNueva()" >CONSULTA NUEVA</a></li>
+        <li><a class="dropdown-item" (click)="irConsultaRapida()">CONSULTA RAPIDA</a></li>
       </ul>
     </div>
   </div>
@@ -65,7 +65,7 @@
           </div>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li *ngFor="let grupo of listaGrupos">
+          <li *ngFor="let grupo of listaGrupos"  style="cursor: pointer;">
             <a class="dropdown-item d-flex align-items-center gap-2" (click)="seleccionarGrupo(grupo)">
               <img [src]="grupo.logoBase64" alt="Grupo" class="group-logo-img" />
               {{ grupo.nombre }}
@@ -82,11 +82,240 @@
             <i class="fa fa-cog"></i>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" (click)="irAltaPaciente()">ALTA DE PACIENTE</a></li>
-          <li><a class="dropdown-item" (click)="irCambiarPassword()">CAMBIAR CONTRASEÑA</a></li>
-          <li><a class="dropdown-item" (click)="logout()">CERRAR SESIÓN</a></li>
+          <li><a class="dropdown-item" (click)="irAltaPaciente()"  style="cursor: pointer;">ALTA DE PACIENTE</a></li>
+          <li><a class="dropdown-item" (click)="irCambiarPassword()"  style="cursor: pointer;">CAMBIAR CONTRASEÑA</a></li>
+          <li><a class="dropdown-item" (click)="logout()"  style="cursor: pointer;">CERRAR SESIÓN</a></li>
         </ul>
       </div>
     </div>
   </div>
   
+
+
+  <!-- empiezan modales  -->
+
+<!-- MODAL CONSULTA NUEVA -->
+<div class="modal fade" id="modalConsultaNueva" tabindex="-1" aria-labelledby="modalConsultaNuevaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow">
+
+      <!-- HEADER -->
+      <div class="modal-header border-0 pb-0">
+        <div class="d-flex align-items-center gap-2">
+          <i class="fa-solid fa-stethoscope text-primary fs-4"></i>
+          <h5 class="modal-title fw-bold text-primary text-uppercase" id="modalConsultaNuevaLabel">CONSULTA NUEVA</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body p-4 pt-2">
+
+        <!-- MÉDICO -->
+        <div class="bg-white border rounded-4 p-3 mb-3">
+          <div class="fw-semibold text-muted small mb-1">SOLICITA:</div>
+          <div class="text-uppercase fw-bold text-info">{{ nombremedicologeado }}</div>
+          <div class="fst-italic text-success">{{ especialidadmedicologeado }}</div>
+        </div>
+
+        <!-- CANAL + DISPONIBILIDAD -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+          <div class="btn-group rounded-pill bg-light p-1">
+            <button class="btn btn-sm fw-semibold rounded-pill"
+                    [ngClass]="{ 'btn-primary text-white': selectedCanal === 'PRESENCIAL', 'btn-light': selectedCanal !== 'PRESENCIAL' }"
+                    (click)="selectedCanal = 'PRESENCIAL'">
+              PRESENCIAL
+            </button>
+            <button class="btn btn-sm fw-semibold rounded-pill"
+                    [ngClass]="{ 'btn-primary text-white': selectedCanal === 'VIDEO CONSULTA', 'btn-light': selectedCanal !== 'VIDEO CONSULTA' }"
+                    (click)="selectedCanal = 'VIDEO CONSULTA'">
+              VIDEO CONSULTA
+            </button>
+          </div>
+
+          <button class="btn btn-primary rounded-pill shadow-sm px-3 fw-bold">
+            <i class="fa fa-calendar-alt me-1"></i> DISPONIBILIDAD
+          </button>
+        </div>
+
+        <!-- PACIENTE -->
+        <div class="mb-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>BUSCAR PACIENTE</mat-label>
+            <input matInput [formControl]="pacienteControl" [matAutocomplete]="autoPaciente" />
+            <mat-autocomplete #autoPaciente="matAutocomplete" (optionSelected)="selectedPaciente = $event.option.value" [displayWith]="displayPacienteFn">
+              <mat-option *ngFor="let paciente of pacientesFiltrados" [value]="paciente">
+                {{ paciente.nombre }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+
+        <!-- MOTIVO -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">INGRESE MOTIVO</label>
+          <textarea class="form-control rounded-3 shadow-sm" rows="3" placeholder="DESCRIBA EL MOTIVO DE LA CONSULTA..." [(ngModel)]="consultaNueva.motivoConsulta"></textarea>
+        </div>
+
+        <!-- DOLENCIA -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold text-primary">DOLENCIA DEL PACIENTE</label>
+          <div class="d-flex gap-2 mt-2 flex-wrap">
+            <button class="btn btn-light rounded-circle p-2" [ngClass]="{ 'border border-success border-2': consultaNueva.catDolometroView?.nivel === 1 }" (click)="consultaNueva.catDolometroView = { idCatDolometro: 1, nivel: 1, doloDescripcion: 'MUY BIEN' }">
+              <i class="fa fa-face-smile-beam text-success"></i>
+            </button>
+            <button class="btn btn-light rounded-circle p-2" [ngClass]="{ 'border border-success border-2': consultaNueva.catDolometroView?.nivel === 2 }" (click)="consultaNueva.catDolometroView = { idCatDolometro: 2, nivel: 2, doloDescripcion: 'BIEN' }">
+              <i class="fa fa-face-smile text-success"></i>
+            </button>
+            <button class="btn btn-light rounded-circle p-2" [ngClass]="{ 'border border-warning border-2': consultaNueva.catDolometroView?.nivel === 3 }" (click)="consultaNueva.catDolometroView = { idCatDolometro: 3, nivel: 3, doloDescripcion: 'REGULAR' }">
+              <i class="fa fa-face-meh text-warning"></i>
+            </button>
+            <button class="btn btn-light rounded-circle p-2" [ngClass]="{ 'border border-danger border-2': consultaNueva.catDolometroView?.nivel === 4 }" (click)="consultaNueva.catDolometroView = { idCatDolometro: 4, nivel: 4, doloDescripcion: 'MAL' }">
+              <i class="fa fa-face-frown text-danger"></i>
+            </button>
+            <button class="btn btn-light rounded-circle p-2" [ngClass]="{ 'border border-danger border-2': consultaNueva.catDolometroView?.nivel === 5 }" (click)="consultaNueva.catDolometroView = { idCatDolometro: 5, nivel: 5, doloDescripcion: 'MUY MAL' }">
+              <i class="fa fa-face-dizzy text-danger"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="d-flex justify-content-end gap-3">
+          <button class="btn btn-success rounded-pill px-4 fw-bold" (click)="guardarConsultaNueva()">
+            <i class="fa fa-check me-1"></i> ACEPTAR
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- MODAL CONSULTA RÁPIDA -->
+<div class="modal fade" id="modalConsultaRapida" tabindex="-1" aria-labelledby="modalConsultaRapidaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow border-0">
+      
+      <!-- HEADER -->
+      <div class="modal-header bg-light border-bottom rounded-top-4">
+        <h5 class="modal-title fw-semibold text-primary-emphasis d-flex align-items-center gap-2" id="modalConsultaRapidaLabel">
+          <i class="fa fa-stethoscope text-success"></i> CONSULTA RÁPIDA
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body p-4">
+
+        <!-- MÉDICO INFO -->
+        <div class="mb-4 bg-white border border-2 border-light rounded-3 p-3">
+          <div class="fw-semibold text-secondary small mb-1">SOLICITA:</div>
+          <div class="text-uppercase text-info fw-bold">{{ nombremedicologeado }}</div>
+          <div class="text-muted fst-italic">{{ especialidadmedicologeado }}</div>
+        </div>
+
+        <!-- BUSCAR PACIENTE -->
+        <mat-form-field appearance="outline" class="w-100 mb-4">
+          <mat-label>Buscar paciente</mat-label>
+          <input matInput [formControl]="pacienteControl" [matAutocomplete]="autoPaciente" />
+          <mat-autocomplete
+            #autoPaciente="matAutocomplete"
+            (optionSelected)="selectedPaciente = $event.option.value"
+            [displayWith]="displayPacienteFn"
+          >
+            <mat-option *ngFor="let paciente of pacientesFiltrados" [value]="paciente">
+              {{ paciente.nombre }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- BOTÓN ACEPTAR -->
+        <div class="text-end">
+          <button mat-raised-button class="btn btn-success px-4 py-2 fw-semibold rounded-pill shadow-sm"
+            (click)="guardarConsultaRapida()">
+            <i class="fa fa-check me-2"></i> Aceptar
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- MODAL CAMBIAR CONTRASEÑA -->
+<div class="modal fade" id="modalCambiarPassword" tabindex="-1" aria-labelledby="modalCambiarPasswordLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary text-white">
+        <h5 class="modal-title" id="modalCambiarPasswordLabel">Cambiar Contraseña</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" id="cerrarModalPassword"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="cambiarPassword()">
+          <div class="mb-3">
+            <label class="form-label">Contraseña actual</label>
+            <input type="password" class="form-control" [(ngModel)]="passwordActual" name="actual" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nueva contraseña</label>
+            <input type="password" class="form-control" [(ngModel)]="nuevaPassword" name="nueva" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Confirmar contraseña</label>
+            <input type="password" class="form-control" [(ngModel)]="confirmarPassword" name="confirmar" required>
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ALTA DE PACIENTE -->
+<div class="modal fade" id="modalAltaPaciente" tabindex="-1" aria-labelledby="modalAltaPacienteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered"> <!-- antes era modal-sm -->
+    <div class="modal-content rounded-4 shadow border-0">
+
+      <!-- HEADER -->
+      <div class="modal-header bg-light border-bottom rounded-top-4">
+        <h5 class="modal-title fw-semibold text-success d-flex align-items-center gap-2" id="modalAltaPacienteLabel">
+          <i class="fa fa-user-plus"></i> LINK ALTA PACIENTES
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- BODY -->
+      <div class="modal-body text-center p-4">
+
+        <!-- INPUT DEL LINK -->
+        <div class="input-group mb-3 shadow-sm" *ngIf="linkAltaPaciente">
+          <input type="text" class="form-control border-end-0 rounded-start-pill px-3" [value]="linkAltaPaciente" readonly>
+          <button class="btn btn-outline-secondary border-start-0 rounded-end-pill" type="button" (click)="copiarLinkAltaPaciente()">
+            <i class="fa fa-copy"></i>
+          </button>
+        </div>
+
+        <!-- BOTÓN GENERAR -->
+        <button class="btn btn-outline-primary rounded-pill fw-semibold px-4 mb-3" (click)="generarLinkAltaPaciente()">
+          GENERAR LINK
+        </button>
+
+        <!-- BOTÓN CERRAR -->
+        <div class="d-grid">
+          <button type="button" class="btn btn-outline-dark rounded-pill" data-bs-dismiss="modal">
+            CERRAR
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -34,3 +34,19 @@
 .header .fa-cog {
   color: #0d6efd !important;
 }
+
+
+
+.dropdown-menu .dropdown-item {
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #17c1e8 !important;  // azul tipo "info"
+  color: white !important;
+}
+
+.paciente-autocomplete .mat-option {
+  line-height: 1.4;
+}

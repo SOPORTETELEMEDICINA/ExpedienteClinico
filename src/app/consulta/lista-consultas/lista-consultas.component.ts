@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/shared/auth/auth.service';
 import { PageImpl, PageRequest } from 'src/app/core/models/shared/page.models';
 import { NiomedicPageRequest } from 'src/app/core/models/shared/niomedicRequest.model';
 import { ConsultaView } from 'src/app/core/models/shared/consulta.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-consultas',
@@ -34,6 +35,7 @@ export class ListaConsultasComponent implements OnInit {
 
   constructor(
     private consultaService: ConsultaService,
+    public router: Router,
     private medicoService: MedicosService,
     private authService: AuthService
   ) {
@@ -74,6 +76,51 @@ export class ListaConsultasComponent implements OnInit {
       }
     }, 500);
   }
+
+
+  startAndGo(consPac,considConsulta,consestadoConsulta):void{
+
+
+    if(consestadoConsulta != 'FINALIZADA'){
+      const estado = {
+        activo: true,
+        color: '#00FF00',
+        descripcion: 'CONSULTA EN TURNO',
+        idEstadoConsulta: 2
+      };
+
+
+      if(consestadoConsulta=='NUEVA'){
+        this.consultaService.iniciarConsulta(considConsulta, estado).subscribe({
+          next: () => {
+            this.router.navigate(
+              ['/pacientes/detalle', consPac, 'consulta-actual'],
+              { queryParams: { idConsulta: considConsulta } }
+            );
+          },
+          error: (err) => {
+            console.error('Error al iniciar consulta rápida', err);
+          }
+        });
+      }else{
+
+        this.router.navigate(
+          ['/pacientes/detalle', consPac, 'consulta-actual'],
+          { queryParams: { idConsulta: considConsulta } }
+        );
+
+      }
+
+      
+
+
+    }
+
+
+
+  }
+
+
 
   buscarConsultas(): void {
     if (!this.idMedico || !this.fechaInicio || !this.fechaFin) return;

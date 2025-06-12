@@ -8,6 +8,11 @@ import { SidebarComponent } from '../common-component/sidebar/sidebar.component'
 import { SharedModule } from '../shared/shared.module';
 import { ModalComponent } from './modal/modal.component';
 
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ShaService } from '../shared/jssha/jssha.service';
+
 @NgModule({
   declarations: [
     CoreComponent,
@@ -17,9 +22,12 @@ import { ModalComponent } from './modal/modal.component';
   ],
   imports: [ 
     CommonModule,
-    CoreRoutingModule,
+    CoreRoutingModule, MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
     SharedModule
   ],
-  exports: []
+  exports: [],
+  providers: [ShaService]
 })
 export class CoreModule { }
